@@ -1,9 +1,12 @@
-<div mat-dialog-container>
-<div mat-dialog-title>
+<div class="card-container">
+  <mat-card>
+    <mat-card-header>
+<mat-card-title>
   <h2>Meeting Details</h2>
-</div>
+</mat-card-title>
+</mat-card-header>
   <form [formGroup]="meetingSearchForm" (ngSubmit)="onSearchMeetingId()">
-    <div mat-dialog-content>
+    <div mat-card-content>
       <mat-form-field appearance="outline">
       <mat-label>MeetingId:</mat-label>
       <input  matInput="text" id="meetingId" formControlName="meetingId" required>
@@ -78,5 +81,4 @@
         </div>
     </form>
   </div>
-
-      
+      </mat-card>

@@ -28,6 +28,7 @@ export interface MeetingDetails {
 export class MeetingDetailsComponent implements OnInit {
 
   meetingId: any;
+  meetingDetails:MeetingDetails|undefined
   meetingDetailsForm!: FormGroup;
   userRole: string = '';
   meetingSearchForm!: FormGroup;
@@ -39,7 +40,7 @@ export class MeetingDetailsComponent implements OnInit {
   ]
   
 
-  constructor(private router: Router, private _fb: FormBuilder, private meetingService: MeetingService, private authService: AuthService, @Inject(MAT_DIALOG_DATA) public meetingDetails: MeetingDetails | undefined, private dialogRef: MatDialogRef<MeetingDetailsComponent>, private _dialog: MatDialog) { }
+  constructor(private router: Router, private _fb: FormBuilder, private meetingService: MeetingService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.userRole = this.authService.getUserRole() || 'unknown';
@@ -124,7 +125,7 @@ export class MeetingDetailsComponent implements OnInit {
           .subscribe(response => {
             // Handle successful update (optional)
             console.log('Remark updated successfully');
-            this.dialogRef.close();
+            
           }, error => {
             // Handle error during update (optional)
             console.error('Error updating remark:', error);
@@ -132,7 +133,7 @@ export class MeetingDetailsComponent implements OnInit {
       } else {
         // Remark hasn't changed (optional: inform user)
         console.log('Remark is unchanged.');
-        this.dialogRef.close();
+        
       }
     } else {
       console.log('Form is invalid');

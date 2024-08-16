@@ -49,7 +49,7 @@ export class HomeComponent implements OnInit {
   fromDate: any;
   toDate: any;
 
-  constructor(private _dialog: MatDialog, private meetingService: MeetingService, private http: HttpClient, private authService:AuthService,private router:Router) {}
+  constructor( private meetingService: MeetingService, private http: HttpClient, private authService:AuthService,private router:Router) {}
   
   ngOnInit(): void {
     // this.meetingService.getProducts().subscribe(data => {
@@ -65,22 +65,23 @@ export class HomeComponent implements OnInit {
   }
 
   openEditForm() {
-    const dialog = this._dialog.open(MeetingComponent);
+    //   const dialog = this._dialog.open(MeetingComponent);
 
-    dialog.afterClosed().subscribe((result: MeetingData | undefined) => {
-      if (result) {
-        this.handleFormData(result);
-      }
-    });
+    //   dialog.afterClosed().subscribe((result: MeetingData | undefined) => {
+    //     if (result) {
+    //       this.handleFormData(result);
+    //     }
+    //   });
+    // }
+
+    // handleFormData(formData: MeetingData) {
+    //   // Update your backend service or local data with the submitted meeting data
+    //   this.getData(); // Refresh the table data after updating
+    // }
+    this.router.navigate(['/meeting'])
   }
-
-  handleFormData(formData: MeetingData) {
-    // Update your backend service or local data with the submitted meeting data
-    this.getData(); // Refresh the table data after updating
-  }
-
   UpdateForm() {
-     this._dialog.open(MeetingDetailsComponent)
+     this.router.navigate(['/edit']);
   }
 
   logout() {

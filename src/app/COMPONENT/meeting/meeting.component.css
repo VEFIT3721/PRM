@@ -1,4 +1,4 @@
-.content{
+/* .content{
     padding-top: 10px;
     flex: 1 1 ;
     margin-right: 10px;
@@ -11,20 +11,144 @@
         width: 50%;
         flex:1 1;
     }
-}
+} */
 .action{
     padding:5px 25px 20px;
     display: flex;
-    justify-content: flex-end; /* Align buttons to the right */
+    justify-content: flex-end; 
     button{
         margin-right: 10px;
     }
 }
-.vrow{
+/* .vrow{
     display: flex;
     margin-left: 23px;
-}
+} */
 .button{
     margin-left: 13px;
     margin-top: 6px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    /* Space between items */
+    margin-bottom: 16px;
+    /* Space below each row */
+
+    mat-form-field {
+        width: calc(50% - 10px);
+        flex: 1 1;
+    }
+
+}
+
+
+.form-field:nth-child(2n) {
+    margin-left: 16px;
+    /* Add margin-left to alternate fields to maintain spacing */
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    /* Space between action buttons */
+    justify-content: flex-end;
+    margin-top: 16px;
+    /* Space above the actions row */
+}
+
+.actions button {
+    margin: 0;
+    margin-left: 10px;
+}
+
+/* Style for the card */
+mat-card {
+    max-width: 900px;
+    /* Set a maximum width for the card */
+    width: 100%;
+    /* Ensure the card takes full width of its container */
+    height: auto;
+    /* Allows the card to adjust height based on content */
+    min-height: 500px;
+    /* Optional: set a minimum height to maintain layout */
+    margin: 0 auto;
+    /* Center the card horizontally */
+    padding: 16px;
+    /* Add padding inside the card */
+    box-shadow: 0 4px 8px rgba(91, 88, 88, 0.1);
+    /* Optional: add shadow for better visibility */
+    border-radius: 8px;
+    /* Optional: add rounded corners */
+    background: linear-gradient(135deg, #e2dfde, #cf6b24);
+    /* Gradient from pink to orange */
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+    mat-card {
+        max-width: 100%;
+        /* Card should take full width on smaller screens */
+        padding: 8px;
+        /* Reduce padding on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    mat-card {
+        min-height: 400px;
+        /* Adjust minimum height for very small screens */
+    }
+}
+
+/* Container for the card to center it horizontally */
+.card-container {
+    display: flex;
+    justify-content: center;
+    /* Center the card horizontally */
+    padding: 16px;
+    /* Add padding around the container */
+    flex: 1 1 100%;
+    /* margin-top: 50px; */
+    margin-left: auto;
+
+
+
+
+}
+
+/* component.css */
+:host {
+    display: block;
+    /* background-image: url('../../../assets/bg1.jpg'); */
+    /* Path to your image */
+    background-size: cover;
+    /* Scale the image to cover the component area */
+    background-position: center;
+    /* Center the image */
+    background-repeat: no-repeat;
+    /* Prevent the image from repeating */
+    min-height: 100vh;
+    /* Ensure the component takes up the full height of the viewport */
+    background: linear-gradient(90deg, #ccff00, #9c27b0)
+}
+
+mat-card-header.mat-mdc-card-header {
+
+    padding-bottom: 16px;
+    padding-right: 16px;
+    padding-left: 16px;
+    margin-left: 0px;
+
+}
+
+mat-card-title.mat-mdc-card-title {
+    padding-left: 366px;
+    padding-right: 290px;
+    background: linear-gradient(90deg, #9c27b0, #e91e63);
+    color: white;
+
+
 }

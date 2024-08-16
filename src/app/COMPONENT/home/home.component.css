@@ -1,18 +1,22 @@
 
-body{
-    /* background: url(../../../assets/cover3.jpg); */
-    height:100vh;
-    background-size: cover;
-    background-position:center;
-    z-index: -1; 
-}   
-.btn-outline-success{
+
+.btn-outline-success {
     margin-left: 13px;
-        margin-right: 14px;
-        padding-left: 0.75rem;
-    }
-.btn-outline-warning{
+    margin-right: 14px;
+    padding-left: 0.75rem;
+}
+
+.btn-outline-warning {
     margin-left: 13px;
-        padding-left: 1.75rem;
-        padding-right: 1.75rem;
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
+}
+/* Add this to your global styles.css or component-specific styles */
+.disabled {
+    pointer-events: none;
+    /* Disable mouse events */
+    opacity: 0.5;
+    /* Make it appear faded */
+    cursor: not-allowed;
+    /* Change cursor to indicate it's not clickable */
 }

@@ -38,7 +38,7 @@ export class MeetingComponent {
 
   
     
-  constructor(private _fb: FormBuilder, private meeting: MeetingService, private _dialogRef: DialogRef, private http: HttpClient, private authService: AuthService,private emailService:EmailService) {
+  constructor(private _fb: FormBuilder, private meeting: MeetingService, private http: HttpClient, private authService: AuthService,private emailService:EmailService) {
   }
   async ngOnInit(): Promise<void> {
     this.meetingForm = this._fb.group({
@@ -114,7 +114,7 @@ export class MeetingComponent {
             });
 
             // alert("Meeting details added Successfully");
-            this._dialogRef.close();
+            // this._dialogRef.close();
               
             // Show success message to user (e.g., using a toast notification)
           }, (error) => {

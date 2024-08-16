@@ -1,9 +1,13 @@
-<div mat-dialog-title>
-    <h1>PRM Details</h1>
-</div>
-  
+<div class="card-container">
+    <mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            <h1>PRM Details</h1>
+        </mat-card-title>
+        
+    </mat-card-header>
    <form [formGroup]="meetingForm" (ngSubmit)="onSubmit()">
-    <div mat-dialog-content>
+    <div mat-card-content>
         
         <div class="row">
             <mat-form-field appearance="outline" >
@@ -78,3 +82,4 @@
         <button mat-raised-button color="primary" [disabled]=!meetingForm type="submit">Save</button>
     </div>
 </form>
+    </mat-card>

@@ -13,6 +13,10 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatRadioModule} from '@angular/material/radio'; 
 import { MatDialogModule } from '@angular/material/dialog';
 import { ToastrModule } from 'ngx-toastr'; // Import ToastrModule
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTableModule } from '@angular/material/table';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -27,6 +31,7 @@ import { HasRoleDirective } from './hasRole.directive';
 import { MeetingDetailsComponent } from './COMPONENT/meeting-details/meeting-details.component';
 import { ExportComponent } from './COMPONENT/export/export.component';
 import { DatePipe } from '@angular/common';
+import { DASHBOARDComponent } from './COMPONENT/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +42,8 @@ import { DatePipe } from '@angular/common';
     MeetingComponent,
     HasRoleDirective,
     MeetingDetailsComponent,
-    ExportComponent
+    ExportComponent,
+    DASHBOARDComponent
   ],
   imports: [
     BrowserModule,
@@ -54,8 +60,11 @@ import { DatePipe } from '@angular/common';
     MatNativeDateModule,
     MatRadioModule,
     MatDialogModule,
-    ToastrModule.forRoot() // Add ToastrModule to imports
-  
+    ToastrModule.forRoot(), // Add ToastrModule to imports
+    MatSnackBarModule,
+    MatTableModule,
+    MatProgressSpinnerModule,
+    MatPaginatorModule,
   ],
   providers: [
     DatePipe,

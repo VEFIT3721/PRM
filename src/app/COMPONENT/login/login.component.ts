@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
           console.log('Login Successful:', response);
           if (response.token) {
             localStorage.setItem('authToken', response.token);
-            this.router.navigate(['/home']);
+            this.router.navigate(['/dashboard']);
             this.login.startTimeoutTimer().subscribe(); // Start session timeout timer
           } else {
             console.error('Missing token in response');
