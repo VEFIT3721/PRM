@@ -1,0 +1,84 @@
+/* .mat-dialog-container { */
+    /* max-width: 80vw; */
+    /* adjust the width to fit the screen */
+    /* max-height: 80vh; */
+    /* adjust the height to fit the screen */
+    /* overflow: auto; */
+    /* add a scrollbar if the content exceeds the container size */
+
+/* .content {
+    padding-top: 10px;
+    flex: 1 1;
+    margin-right: 10px;
+}
+
+.row {
+
+    gap: 10px;
+
+    mat-form-field {
+        width: 50%;
+        flex: 1 1;
+    }
+}
+
+.vrow {
+    display: flex;
+    margin-left: 23px;
+}
+
+.button {
+    margin-left: 13px;
+    margin-top: 6px;
+    width:auto
+} */
+
+/* General Styles */
+.mat-dialog-container {
+    max-width: 600px;
+    /* Limiting width for better readability */
+    margin: auto;
+}
+
+.mat-dialog-title h2 {
+    font-size: 1.5rem;
+    margin: 0;
+    padding: 16px;
+    text-align: center;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+button {
+    display: block;
+    width: 100%;
+    margin-top: 16px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    /* Spacing between fields */
+}
+
+.row mat-form-field {
+    flex: 1 1 100%;
+    /* Flex items take full width */
+}
+
+@media (min-width: 600px) {
+    .row mat-form-field {
+        flex: 1 1 calc(50% - 16px);
+        /* Two columns layout */
+    }
+}
+
+@media (min-width: 900px) {
+    .row mat-form-field {
+        flex: 1 1 calc(33% - 16px);
+        /* Three columns layout */
+    }
+}

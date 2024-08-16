@@ -1,0 +1,36 @@
+
+  <mat-card>
+    <mat-card-header
+      >̥
+      <mat-card-title>Export Excel</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form [formGroup]="Export" (ngSubmit)="exportToExcel()">
+          <mat-card-content>
+            <div class="row">
+              <mat-form-field appearance="outline">
+                <mat-label>From Date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="fromDate" />
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>To Date</mat-label>
+                <input matInput [matDatepicker]="pickerTo" formControlName="toDate" />
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="pickerTo"></mat-datepicker-toggle>
+                <mat-datepicker #pickerTo></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <div class="button">
+              <button mat-raised-button color="warn" [disabled]='!Export.valid' (click)="exportToExcel()">Export</button>
+            </div>
+            </mat-card-actions>
+        </form>
+    </mat-card-content>
+   
+  </mat-card>
+

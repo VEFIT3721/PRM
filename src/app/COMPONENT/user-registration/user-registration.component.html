@@ -14,39 +14,33 @@
               <mat-error *ngIf="regForm.get('username')?.errors"> Username is required.
               </mat-error>
             </mat-form-field>
-          </div>
-          <div class="row">
             <mat-form-field appearance="outline">
-                <mat-label>EmployeeCode</mat-label>
+                <mat-label style="color:#ff5400">EmployeeCode</mat-label>
                 <input type="integer" matInput formControlName="EmpCode" placeholder="376771">
                 <mat-icon matSuffix icon style="color:aqua;">mail</mat-icon>
                 <mat-error *ngIf="regForm.get('EmpCode')?.errors">Code is required  and should be a number.</mat-error>
-
             </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field appearance="outline">
-                <mat-label>Email</mat-label>
+                <mat-label style="color:#ff5400,">Email</mat-label>
                 <input type="email" matInput formControlName="useremail" placeholder="232@manappuram.com">
                 <mat-icon matSuffix icon style="color:aqua;">mail</mat-icon>
                 <mat-error *ngIf="regForm.get('email')?.errors">Email is required</mat-error>
-
             </mat-form-field>
+            <mat-form-field appearance="outline" required>
+                <mat-label style="color:#ff5400;">Password</mat-label>
+                <input matInput type="password" formControlName="hashedPassword" placeholder="Password">
+                <mat-icon matSuffix icon style="color: aqua;">lock</mat-icon>
+                <mat-error *ngIf="regForm.get('password')?.errors"> Password is required.
+                </mat-error>
+              </mat-form-field>
           </div>
           <div class="row">
             <mat-form-field appearance="outline" required>
-              <mat-label style="color:#ff5400;">Password</mat-label>
-              <input matInput type="password" formControlName="password" placeholder="Password">
-              <mat-icon matSuffix icon style="color: aqua;">lock</mat-icon>
-              <mat-error *ngIf="regForm.get('password')?.errors"> Password is required.
-              </mat-error>
-            </mat-form-field>
-          </div>
-          <div class="row">
-            <mat-form-field appearance="outline" required>
-              <mat-label>Role</mat-label>
-              <mat-select formControlName="roles" required>
-                <mat-option *ngFor="let val of roles" [value]="val">
+              <mat-label style="color: #ff5400;">Role</mat-label>
+              <mat-select formControlName="user_roles" required>
+                <mat-option *ngFor="let val of user_roles" [value]="val">
                   {{val}}
                 </mat-option>
               </mat-select>

@@ -5,7 +5,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
-    background: rgba(0,0,0,0.2);
+    background: rgba(224, 216, 216, 0.3);
     border:2px;
     border-radius: 20px;
     border-color:black;
@@ -29,7 +29,7 @@
   }
   .container:after {  /* Target outer container element for background */
     content: "";
-    background-image: url("../../../assets/cover3.jpg");  background-attachment: scroll;
+    background-image: url("../../../assets/pattern\ bg.jpg");  background-attachment: scroll;
     background-repeat: no-repeat;
     background-size: cover;
     position: fixed;
@@ -46,7 +46,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(240, 225, 225, 0.2);
     border: 2px solid black;
     border-radius: 20px;
   }
