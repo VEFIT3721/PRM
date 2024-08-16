@@ -4,6 +4,7 @@ import { MeetingService } from '../../SERVICE/meeting.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Route, Router } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 
 export interface MeetingDetails {
   meetingId: string;
@@ -40,7 +41,7 @@ export class MeetingDetailsComponent implements OnInit {
   ]
   
 
-  constructor(private router: Router, private _fb: FormBuilder, private meetingService: MeetingService, private authService: AuthService) { }
+  constructor(private router: Router, private _fb: FormBuilder, private meetingService: MeetingService, private authService: AuthService,private toastr:ToastrService) { }
 
   ngOnInit(): void {
     this.userRole = this.authService.getUserRole() || 'unknown';
@@ -125,6 +126,7 @@ export class MeetingDetailsComponent implements OnInit {
           .subscribe(response => {
             // Handle successful update (optional)
             console.log('Remark updated successfully');
+            this.toastr.success("Remark updated successfully");
             
           }, error => {
             // Handle error during update (optional)
@@ -133,6 +135,7 @@ export class MeetingDetailsComponent implements OnInit {
       } else {
         // Remark hasn't changed (optional: inform user)
         console.log('Remark is unchanged.');
+        this.toastr.warning("Remark is unchanged");
         
       }
     } else {
