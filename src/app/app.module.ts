@@ -60,7 +60,12 @@ import { DASHBOARDComponent } from './COMPONENT/dashboard/dashboard.component';
     MatNativeDateModule,
     MatRadioModule,
     MatDialogModule,
-    ToastrModule.forRoot(), // Add ToastrModule to imports
+    ToastrModule.forRoot({
+      timeOut: 3000,
+  positionClass: 'toast-top-right',
+  preventDuplicates: true,
+  progressBar: true,
+    }), // Add ToastrModule to imports
     MatSnackBarModule,
     MatTableModule,
     MatProgressSpinnerModule,
