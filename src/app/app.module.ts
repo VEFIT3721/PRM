@@ -24,7 +24,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './COMPONENT/login/login.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { UserRegistrationComponent } from './COMPONENT/user-registration/user-registration.component';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withFetch } from '@angular/common/http';
 import { HomeComponent } from './COMPONENT/home/home.component';
 import { MeetingComponent } from './COMPONENT/meeting/meeting.component';
 import { HasRoleDirective } from './hasRole.directive';
@@ -32,6 +32,8 @@ import { MeetingDetailsComponent } from './COMPONENT/meeting-details/meeting-det
 import { ExportComponent } from './COMPONENT/export/export.component';
 import { DatePipe } from '@angular/common';
 import { DASHBOARDComponent } from './COMPONENT/dashboard/dashboard.component';
+import { AuthInterceptor } from './auth.interceptor';
+import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [
@@ -75,7 +77,10 @@ import { DASHBOARDComponent } from './COMPONENT/dashboard/dashboard.component';
     DatePipe,
     provideClientHydration(),
     provideAnimationsAsync(),
-    provideHttpClient(withFetch())
+    provideHttpClient(withFetch()),
+    JwtHelperService,
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

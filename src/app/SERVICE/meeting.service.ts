@@ -47,7 +47,7 @@ getMeetingDetailsById(meetingId: string): Observable<any> {
     );
 }
 
- updateMeetingRemark(meetingId: string, remark: string): Observable<any> {
+ updateMeetingRemark(meetingId: string, remark: string,updatedBy: string): Observable<any> {
    console.log('updateMeetingRemark called with:', meetingId, remark);
    if (this.authService.getUserRole() !== 'maker') {
 
@@ -60,7 +60,7 @@ getMeetingDetailsById(meetingId: string): Observable<any> {
    console.log("Received Token:-",token)
    const headers = new HttpHeaders().set('Content-Type', 'application/json')
    .set('Authorization', `Bearer ${this.authService.getToken()}`);
-  const jsonData = JSON.stringify({ remark });
+  const jsonData = JSON.stringify({ remark,updatedBy });
 
   return this.http.put<any>(`http://localhost:3000/api/meetings/${meetingId}/remark`, jsonData, { headers })
     .pipe(

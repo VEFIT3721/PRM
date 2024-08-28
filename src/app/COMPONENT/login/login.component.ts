@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
           if (response.token) {
             localStorage.setItem('authToken', response.token);
             this.router.navigate(['/dashboard']);
-            this.login.startTimeoutTimer().subscribe(); // Start session timeout timer
+            // this.login.startTimeoutTimer().subscribe(); // Start session timeout timer
             this.toastr.success('Login Successful!', 'Success');
           } else {
             console.error('Missing token in response');

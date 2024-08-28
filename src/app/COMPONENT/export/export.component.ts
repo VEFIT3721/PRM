@@ -5,6 +5,7 @@ import moment from 'moment';
 import { MomentTimezone } from 'moment-timezone';
 import * as XLSX from 'xlsx';
 import { ReloadService } from '../../SERVICE/reload.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface MeetingData {
   ID: number;
@@ -35,7 +36,7 @@ export class ExportComponent {
   
   
   
-  constructor(private http: HttpClient, private fb: FormBuilder, private pageReloadService: ReloadService) { }
+  constructor(private http: HttpClient, private fb: FormBuilder, private pageReloadService: ReloadService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.Export = this.fb.group({
@@ -77,8 +78,14 @@ export class ExportComponent {
         }
       } catch (error) {
         console.error('Error validating dates:');
-        alert("to date should not less than from date")
+         this.snackBar.open('To date should not be less than from date', 'Close', {
+          duration: 3000,
+          verticalPosition: 'top',
+          horizontalPosition: 'center',
+          panelClass: ['error-snackbar']
+        });
         return;
+        
       }
     // passed fromDate and Todate through query params
       const queryParams = `fromDate=${ExportData.fromDate}&toDate=${ExportData.toDate}`;
@@ -90,10 +97,22 @@ export class ExportComponent {
           link.href = url;
           link.download = 'prm_data.xlsx';
           link.click();
+           // Show success notification
+          this.snackBar.open('Export successful!', 'Close', {
+            duration: 3000,
+            verticalPosition: 'top',
+            horizontalPosition: 'center',
+          });
+          this.Export.reset();
         }, error => {
           console.error(error);
           if (error.status === 400 && error.error.message.includes('export limit')) {
-            this.errorMessage = `Maximum export limit is ${this.exportLimit}. Please refine your date range.`;
+            this.snackBar.open(`Maximum export limit is ${this.exportLimit}. Please refine your date range.`, 'Close', {
+              duration: 5000,
+              verticalPosition: 'top',
+              horizontalPosition: 'center',
+              panelClass: ['error-snackbar']
+            });
           } else {
             // Handle other errors (e.g., database connection, invalid data format)
             this.errorMessage = 'Failed to export data. Please try again later.';

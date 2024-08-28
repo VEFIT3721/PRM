@@ -1,85 +1,87 @@
 <div class="card-container">
     <mat-card>
-    <mat-card-header>
-        <mat-card-title>
-            <h1>PRM Details</h1>
-        </mat-card-title>
-        
-    </mat-card-header>
-   <form [formGroup]="meetingForm" (ngSubmit)="onSubmit()">
-    <div mat-card-content>
-        
-        <div class="row">
-            <mat-form-field appearance="outline" >
-                <mat-label>EMAIL </mat-label>
-                <input matInput type="email" formControlName="EMAIL_ID">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Prm Conducted Date</mat-label>
-                <input  matInput [matDatepicker]="picker"formControlName= "ConductedDate">
-                <mat-hint>MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
+        <mat-card-header>
+            <mat-card-title>
+                <h1>PRM Details</h1>
+            </mat-card-title>
+        </mat-card-header>
+        <div mat-card-content>
+
+            <form [formGroup]="meetingForm" (ngSubmit)="onSubmit()">
+                <div class="row">
+                    <mat-form-field appearance="outline">
+                        <mat-label>EMAIL </mat-label>
+                        <input matInput type="email" formControlName="EMAIL_ID">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Prm Conducted Date</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="ConductedDate">
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Dept_HOD_EMPCODE</mat-label>
+                        <input type="number" #empCodeInput id="EmpCode" matInput formControlName="EmpCode">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Prm_Conducted_By</mat-label>
+                        <input matInput formControlName="ConductedPerson">
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Department_Name</mat-label>
+                        <input matInput formControlName="department">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Responsible Department Person</mat-label>
+                        <input type="text" matInput formControlName="DeptHod">
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Vertical_Name</mat-label>
+                        <input matInput formControlName="VerticalName">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Mis_Cordinator</mat-label>
+                        <input matInput formControlName="MisCordinator">
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Target Date</mat-label>
+                        <input matInput [min]="getTodayString()" matInput [matDatepicker]="pickerTo"
+                            formControlName="TargetDate">
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="pickerTo"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerTo></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Status</mat-label>
+                        <mat-select formControlName="Remark">
+                            <mat-option *ngFor="let val of Remark" [value]="val">{{val}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Actionable_Points</mat-label>
+                        <textarea matInput formControlName="ActionPoint" (input)="onActionPointInput($event)"></textarea>
+                        <mat-hint>Word count: {{ getWordCount(meetingForm.get('ActionPoint')?.value || '') }}/{{ maxWords }}</mat-hint>
+                        <mat-error *ngIf="isWordLimitExceeded(meetingForm.get('ActionPoint')?.value || '')">
+                            Word limit exceeded! Maximum allowed is {{ maxWords }} words.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+        <div mat-dialog-actions class="action">
+            <button mat-raised-button type="button" (click)="onCancel()">cancel</button>
+
+            <button mat-raised-button color="primary" [disabled]=!meetingForm type="submit">Save</button>
         </div>
-        <div class="row">
-             <mat-form-field appearance="outline">
-                <mat-label>Dept_HOD_EMPCODE</mat-label>
-                <input type="number" #empCodeInput id="EmpCode" matInput formControlName="EmpCode">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Prm_Conducted_By</mat-label>
-                <input matInput formControlName="ConductedPerson">
-            </mat-form-field>
+        </form>
         </div>
-        <div class="row">
-            <mat-form-field appearance="outline">
-                <mat-label>Department_Name</mat-label>
-                <input matInput formControlName="department">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Responsible Department Person</mat-label>
-                <input type="text" matInput formControlName="DeptHod">
-            </mat-form-field>
-        </div>
-        <div class="row">
-           <mat-form-field appearance="outline">
-                <mat-label>Vertical_Name</mat-label>
-                <input matInput formControlName="VerticalName">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Mis_Cordinator</mat-label>
-                <input matInput formControlName="MisCordinator">
-            </mat-form-field>
-        </div>
-        <div class="row">
-            <mat-form-field appearance="outline">
-                <mat-label>Target Date</mat-label>
-                <input matInput [min]="getTodayString()" matInput [matDatepicker]="pickerTo"formControlName= "TargetDate">
-                <mat-hint>MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle matIconSuffix [for]="pickerTo"></mat-datepicker-toggle>
-                <mat-datepicker #pickerTo></mat-datepicker>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Status</mat-label>
-                <mat-select formControlName="Remark">
-                    <mat-option *ngFor="let val of Remark"[value]="val">{{val}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div class="row">
-            <mat-form-field appearance="outline">
-                <mat-label>Actionable_Points</mat-label>
-                <textarea matInput formControlName="ActionPoint" [maxLength]="200"></textarea>
-            </mat-form-field>
-        </div>
-        
-    </div>
-    
-    <div mat-dialog-actions class="action">
-        <button mat-raised-button type="button"[mat-dialog-close]="false">cancel</button>
-        
-        <button mat-raised-button color="primary" [disabled]=!meetingForm type="submit">Save</button>
-    </div>
-</form>
     </mat-card>

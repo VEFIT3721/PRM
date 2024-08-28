@@ -114,7 +114,7 @@ export class MeetingDetailsComponent implements OnInit {
       const originalRemark = this.originalRemark;
       const updatedRemark = this.meetingDetailsForm.get('finalRemark')?.value;
       const meetingId = this.meetingDetails?.meetingId; // Extract ID from fetched data
-
+       const updatedBy = String(this.authService.getEmpCode() || ''); 
       if (!meetingId) {
         console.error('Meeting ID not available');
         return; // Handle missing ID error (optional)
@@ -122,7 +122,7 @@ export class MeetingDetailsComponent implements OnInit {
 
       if (originalRemark !== updatedRemark) {
         // Remark has changed, send entire form data to backend
-        this.meetingService.updateMeetingRemark(meetingId, updatedRemark)
+        this.meetingService.updateMeetingRemark(meetingId, updatedRemark,updatedBy)
           .subscribe(response => {
             // Handle successful update (optional)
             console.log('Remark updated successfully');

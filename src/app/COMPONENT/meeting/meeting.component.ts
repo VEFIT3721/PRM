@@ -34,7 +34,8 @@ export class MeetingComponent {
   meetingForm!: FormGroup<any>;
   meetingSearchForm!: FormGroup;
   @ViewChild('empCodeInput') empCodeInput!: ElementRef; // Reference to the input element
-  
+  maxWords = 1000;
+  showCard = true; // Hide the card on cancel
 
   
     
@@ -62,6 +63,26 @@ export class MeetingComponent {
     const today = new Date().toISOString().slice(0, 10);
     return today;
   }
+    getWordCount(text: string): number {
+    if (!text) return 0;
+    return text.trim().split(/\s+/).length;
+  }
+
+  isWordLimitExceeded(text: string): boolean {
+    return this.getWordCount(text) > this.maxWords;
+  }
+
+  onActionPointInput(event: Event) {
+    const target = event.target as HTMLTextAreaElement; // Type assertion
+    const value = target.value;
+    // Trim text to the first 1000 words if needed
+    const words = value.trim().split(/\s+/);
+    if (words.length > this.maxWords) {
+      const truncatedText = words.slice(0, this.maxWords).join(' ');
+      this.meetingForm.get('ActionPoint')?.setValue(truncatedText);
+    }
+  }
+  
 
   onSearchMeetingId() {
     if (this.meetingSearchForm.valid) {
@@ -74,6 +95,9 @@ export class MeetingComponent {
     if (this.meetingForm.valid) {
       console.log('Data sent to backend:', this.meetingForm.value);
       const meetingData = this.meetingForm.value; // Retrieve form values
+       const createdBy = this.authService.getEmpCode(); // Fetch createdBy value from AuthService
+      meetingData.CREATED_BY = createdBy; // Add CREATED_BY to meeting data
+
           
       // Validate ConductedDate and TargetDate before converting to ISO format
       try {
@@ -102,6 +126,8 @@ export class MeetingComponent {
             const meetingId = response.meetingId; // Assuming meetingId is in the response
             this.showSuccessNotification(meetingId);
             this.meetingForm.reset();
+             this.showCard = false; // Hide the card on cancel
+
 
              // Send email request using the service
           this.emailService.getEmail(meetingId, meetingData.EMAIL_ID, meetingData.DeptHod)
@@ -124,6 +150,10 @@ export class MeetingComponent {
               
           });
       }
+  }
+  onCancel() {
+    console.log("clicked")
+     this.showCard = false; // Hide the card on cancel
   }
   showSuccessNotification(meetingId: string) {
     // Implement your notification logic here (e.g., using a toast library)
@@ -149,4 +179,7 @@ export class MeetingComponent {
       });
     }
   }
+
   }
+
+   
