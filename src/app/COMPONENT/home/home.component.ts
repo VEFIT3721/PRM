@@ -81,7 +81,7 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/meeting'])
   }
   UpdateForm() {
-     this.router.navigate(['/edit']);
+    this.router.navigate(['/edit']);
   }
 
   logout() {
@@ -103,7 +103,7 @@ export class HomeComponent implements OnInit {
       });
   }
   Export() {
-    this.router.navigate(['export']);
+    this.router.navigate(['/export']);
   }
 }
 

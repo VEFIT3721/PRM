@@ -152,3 +152,26 @@ mat-card-title.mat-mdc-card-title {
 
 
 }
+/* Custom toastr styles */
+.toast-success {
+    background-color: #28a745; /* Green background for success */
+    color: #fff; /* White text color */
+  }
+  
+  .toast-error {
+    background-color: #dc3545; /* Red background for error */
+    color: #fff; /* White text color */
+  }
+  
+  .toast-info {
+    background-color: #17a2b8; /* Blue background for info */
+    color: #fff; /* White text color */
+  }
+  
+  .toast-warning {
+    background-color: #ffc107; /* Yellow background for warning */
+    color: #000; /* Black text color */
+  }
+  
+  /* You can further customize toast positions and other aspects */
+  

@@ -4,6 +4,7 @@ import { MeetingService } from '../../SERVICE/meeting.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Route, Router } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 
 export interface MeetingDetails {
   meetingId: string;
@@ -37,10 +38,19 @@ export class MeetingDetailsComponent implements OnInit {
     'in-progress',
     'Resolved',
     'Rejected'
-  ]
-  
+  ];
+  uploadedFileUrl!: string;
+  fileType!: string;
+  downloadFileUrl!: string;
+  meetingFiles: any[] = [];
+  uploadProgress = 0; // Upload progress indicator
+  isUploading = false; // To show/hide progress bar
+  uploadedFile!: File; 
+  uploadedFileName!: string; // To store the original file name
+  uploadedFileExtension!: string; // To store the file extension
+ 
 
-  constructor(private router: Router, private _fb: FormBuilder, private meetingService: MeetingService, private authService: AuthService) { }
+  constructor(private router: Router, private _fb: FormBuilder, private meetingService: MeetingService, private authService: AuthService,private toastr:ToastrService) { }
 
   ngOnInit(): void {
     this.userRole = this.authService.getUserRole() || 'unknown';
@@ -86,6 +96,7 @@ export class MeetingDetailsComponent implements OnInit {
           };
           this.meetingDetails = meetingDetails;
           this.originalRemark = meetingDetails.Remark; // Store original remark
+          this.fetchMeetingFiles(this.meetingId);
         } else {
           console.warn('No meeting details found for ID:', this.meetingId);
           // Handle case where no meeting is found (optional)
@@ -96,7 +107,76 @@ export class MeetingDetailsComponent implements OnInit {
       });
   }
  
+  fetchMeetingFiles(meetingId: string) {
+    this.meetingService.getMeetingFiles(meetingId)
+      .subscribe((files) => {
+        if (files && files.length > 0) {
+          this.meetingFiles = files.map(file => ({
+            ...file,
+            fileUrl: `data:${file.fileType};base64,${file.fileData}`
+          }));
+          console.log('Fetched Files:', this.meetingFiles); // Log to check fetched files
+        } else {
+          console.warn('No files found for this meeting ID:', meetingId);
+        }
+      }, (error) => {
+        console.error('Error fetching meeting files:', error);
+      });
+  }
   
+  onFileChange(event: any) {
+    const file = event.target.files[0];
+    const allowedTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv', 'application/.jpg'];
+    if (file) {
+      if (!allowedTypes.includes(file.type)) {
+        this.toastr.error('Unsupported file format.');
+        return;
+      }
+      if (file.size > 2 * 1024 * 1024) {
+        this.toastr.error('File size should not exceed 2MB.');
+        return;
+      }
+      this.uploadedFile = file; // Store the file
+    this.fileType = file.type; // Store the file type
+
+    // Extract and store the original file name and extension
+    this.uploadedFileName = file.name.split('.').slice(0, -1).join('.');
+    this.uploadedFileExtension = file.name.split('.').pop() || '';
+
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.uploadedFileUrl = e.target.result;
+        this.simulateUpload();  // Simulate the upload process here
+      };
+      reader.readAsDataURL(file);
+    }
+
+  } simulateUpload() {
+    this.isUploading = true; // Show progress bar
+    this.uploadProgress = 0;
+
+    const interval = setInterval(() => {
+      this.uploadProgress += 10;
+
+      if (this.uploadProgress >= 100) {
+        clearInterval(interval);
+        this.isUploading = false; // Hide progress bar when done
+        this.toastr.success('File uploaded successfully!', 'Success');
+      }
+    }, 200); // Simulate the upload progress every 200ms
+  }
+
+
+  onViewFile(fileUrl: string) {
+    window.open(this.uploadedFileUrl, '_blank');
+  }
+
+  downloadFile(fileUrl: string, fileName: string) {
+    const link = document.createElement('a');
+    link.href = fileUrl;
+    link.download = fileName;
+    link.click();
+  }  
   onSearchMeetingId() {
     if (this.meetingSearchForm.valid) {
       const meetingId = this.meetingSearchForm.get('meetingId')?.value;
@@ -113,6 +193,7 @@ export class MeetingDetailsComponent implements OnInit {
       const originalRemark = this.originalRemark;
       const updatedRemark = this.meetingDetailsForm.get('finalRemark')?.value;
       const meetingId = this.meetingDetails?.meetingId; // Extract ID from fetched data
+      const updatedBy = String(this.authService.getEmpCode() || '');
 
       if (!meetingId) {
         console.error('Meeting ID not available');
@@ -120,19 +201,32 @@ export class MeetingDetailsComponent implements OnInit {
       }
 
       if (originalRemark !== updatedRemark) {
+        const formData = new FormData();
+      if (this.uploadedFile) {
+        formData.append('file', this.uploadedFile, this.uploadedFile.name);
+      }
+      formData.append('remark', updatedRemark);
+      formData.append('meetingId', meetingId);
+      formData.append('updatedBy', updatedBy); // Include `updatedBy`
         // Remark has changed, send entire form data to backend
-        this.meetingService.updateMeetingRemark(meetingId, updatedRemark)
+        this.meetingService.updateMeetingRemark(meetingId, formData)
           .subscribe(response => {
             // Handle successful update (optional)
             console.log('Remark updated successfully');
+            this.toastr.success("Remark updated successfully",'sucess')
             
           }, error => {
             // Handle error during update (optional)
             console.error('Error updating remark:', error);
+          
+            this.toastr.error("Error updated sucessfully")
           });
       } else {
         // Remark hasn't changed (optional: inform user)
         console.log('Remark is unchanged.');
+        alert("Remark is unchanged")
+        this.toastr.warning("Remark is unchanged")
+        this.meetingDetailsForm.reset();
         
       }
     } else {

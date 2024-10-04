@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../SERVICE/auth.service';
 import { Route, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { error } from 'console';
 
 @Component({
   selector: 'app-user-registration',
@@ -12,8 +14,8 @@ export class UserRegistrationComponent implements OnInit {
  
   regForm!: FormGroup;
   errorMessage: string = '';
-  user_roles = ['maker','checker', 'Admin']; 
-  constructor(private fb:FormBuilder,private registerService:AuthService,private router:Router){}
+  user_roles = ['USER','ADMIN', 'CHECKER']; 
+  constructor(private fb:FormBuilder,private registerService:AuthService,private router:Router,private toaster:ToastrService){}
   ngOnInit(): void {
     this.regForm = this.fb.group({
       EmpCode: ['', Validators.required],
@@ -26,17 +28,20 @@ export class UserRegistrationComponent implements OnInit {
   onSubmit(): void {
 
     if (this.regForm.valid) {
-      console.log('user created sucessfully',this.regForm.value);
+     const meetingData = this.regForm.value
+     const createdBy = this.registerService.getEmpCode(); // Fetch createdBy value from AuthService
+      meetingData.CREATED_BY = createdBy; 
       this.registerService.registerUser(this.regForm.value).subscribe((response) => {
-        alert('User Created Sucessfully');
+        this.toaster.success('User Created Sucessfully');
         this.router.navigate(['/login'])
-        //console.log("Response", response);
+
         this.regForm.reset();
+        
   });
       
     } else{
-      console.error('Login form validation errors:', this.regForm.errors);
-      this.errorMessage= "Please fill all the fields";
+       this.errorMessage= "Please fill all the fields";
+       this.toaster.error("kindly fill correct details")
     }
 
   

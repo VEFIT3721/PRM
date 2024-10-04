@@ -34,7 +34,7 @@ export class MeetingComponent {
   meetingForm!: FormGroup<any>;
   meetingSearchForm!: FormGroup;
   @ViewChild('empCodeInput') empCodeInput!: ElementRef; // Reference to the input element
-  
+  maxWords = 1000;
 
   
     
@@ -63,6 +63,26 @@ export class MeetingComponent {
     return today;
   }
 
+  getWordCount(text: string): number {
+    if (!text) return 0;
+    return text.trim().split(/\s+/).length;
+  }
+
+  isWordLimitExceeded(text: string): boolean {
+    return this.getWordCount(text) > this.maxWords;
+  }
+
+  onActionPointInput(event: Event) {
+    const target = event.target as HTMLTextAreaElement; // Type assertion
+    const value = target.value;
+    // Trim text to the first 1000 words if needed
+    const words = value.trim().split(/\s+/);
+    if (words.length > this.maxWords) {
+      const truncatedText = words.slice(0, this.maxWords).join(' ');
+      this.meetingForm.get('ActionPoint')?.setValue(truncatedText);
+    }
+  }
+
   onSearchMeetingId() {
     if (this.meetingSearchForm.valid) {
       const meetingId = this.meetingSearchForm.get('meetingId')?.value;
@@ -74,6 +94,9 @@ export class MeetingComponent {
     if (this.meetingForm.valid) {
       console.log('Data sent to backend:', this.meetingForm.value);
       const meetingData = this.meetingForm.value; // Retrieve form values
+      const createdBy = this.authService.getEmpCode(); // Fetch createdBy value from AuthService
+      meetingData.CREATED_BY = createdBy; // Add CREATED_BY to meeting data
+
           
       // Validate ConductedDate and TargetDate before converting to ISO format
       try {

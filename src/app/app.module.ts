@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatCardModule} from '@angular/material/card'; 
 import {MatFormFieldModule} from '@angular/material/form-field'; 
 import {MatInputModule} from '@angular/material/input'; 
@@ -12,11 +13,13 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatRadioModule} from '@angular/material/radio'; 
 import { MatDialogModule } from '@angular/material/dialog';
-import { ToastrModule } from 'ngx-toastr'; // Import ToastrModule
+import { ToastrModule } from 'ngx-toastr';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -47,6 +50,7 @@ import { DASHBOARDComponent } from './COMPONENT/dashboard/dashboard.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     MatCardModule,
     MatFormFieldModule,
@@ -60,11 +64,17 @@ import { DASHBOARDComponent } from './COMPONENT/dashboard/dashboard.component';
     MatNativeDateModule,
     MatRadioModule,
     MatDialogModule,
-    ToastrModule.forRoot(), // Add ToastrModule to imports
+    ToastrModule.forRoot({
+      timeOut: 3000,  // Delay in milliseconds before toast disappears
+     closeButton: true, // Add a close button
+     progressBar: true, // Display a progress bar
+     positionClass: 'toast-top-right', // Position (e.g., 'toast-top-right', 'toast-bottom-full-width'),
+   }),
     MatSnackBarModule,
     MatTableModule,
     MatProgressSpinnerModule,
     MatPaginatorModule,
+    MatProgressBarModule,
   ],
   providers: [
     DatePipe,

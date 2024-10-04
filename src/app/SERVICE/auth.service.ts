@@ -5,10 +5,12 @@ import { throwError, BehaviorSubject, Observable, of, timer } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
+import { environment } from '../../enviroments/environment'; // Import environment configuration
 
 interface DecodedToken {
   username: string;
   role: string; // Add role property to interface
+  EmpCode:number;
 }
 
 @Injectable({
@@ -22,14 +24,14 @@ export class AuthService {
   private blockTimeSubject = new BehaviorSubject<number>(0); // New BehaviorSubject for block time
   remainingBlockTime$ = this.blockTimeSubject.asObservable();
 
-  constructor(private http: HttpClient,private router:Router) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   registerUser(user: any) {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const jsonData = JSON.stringify(user);
     console.log(jsonData);
 
-    return this.http.post<any>('http://localhost:3000/api/register', jsonData, { headers })
+    return this.http.post<any>(`${environment.apiUrl}/register`, jsonData, { headers })
       .pipe(
         catchError(this.handleError)
       );
@@ -40,7 +42,7 @@ export class AuthService {
     const json = JSON.stringify(User);
     console.log(json);
 
-    return this.http.post<any>('http://localhost:3000/api/login', json, { headers })
+    return this.http.post<any>(`${environment.apiUrl}/login`, json, { headers })
       .pipe(
         catchError(this.handleError),
         tap(response => {
@@ -64,7 +66,7 @@ export class AuthService {
       );
   }
 
-   startTimeoutTimer() {
+  startTimeoutTimer() {
     // Set timeout duration (15 minutes in milliseconds)
     const timeoutDuration = 5 * 60 * 1000;
 
@@ -72,12 +74,11 @@ export class AuthService {
       switchMap(() => {
         console.log('Timer expired');
         this.logout();
-      this.router.navigate(['/login']);
+        this.router.navigate(['/login']);
         return of(false); // Emit false to indicate timeout
       }),
       takeUntil(this.isLoggedIn$) // Stop timer if user logs in again
     );
-    
   }
 
   logout() {
@@ -92,36 +93,35 @@ export class AuthService {
     return throwError('Something bad happened; please try again later.');
   }
 
- 
-  
-  
-
   // Helper function to decode the JWT token
   private decodeToken(token: string): DecodedToken {
     const jwtHelper = new JwtHelperService();
     const decodedToken = jwtHelper.decodeToken(token);
-    return { username: decodedToken.username, role: decodedToken.role }; // Extract username and role
+    return { username: decodedToken.username, role: decodedToken.role,EmpCode:decodedToken.EmpCode }; // Extract username and role
   }
 
   // New method to retrieve the user's role
   getUserRole(): string | undefined {
-  if (this.loggedInUser) {
-    console.log("Role retrieved:", this.loggedInUser);
-    return this.loggedInUser.role;
-  } else {
-    console.log("User not logged in or role not available");
-    return undefined; // Explicitly return undefined for clarity
+    if (this.loggedInUser) {
+      console.log("Role retrieved:", this.loggedInUser);
+      return this.loggedInUser.role;
+    } else {
+      console.log("User not logged in or role not available");
+      return undefined; // Explicitly return undefined for clarity
+    }
   }
-}
+  getEmpCode(): number | undefined {
+    if (this.loggedInUser) {
+      console.log("Employee Code retrieved:", this.loggedInUser.EmpCode);
+      return this.loggedInUser.EmpCode;
+    } else {
+      console.log("User not logged in or empCode not available");
+      return undefined;
+    }
+  }
 
   getToken(): string | null {
-      console.log('Retrieved token from local storage:', localStorage.getItem('authToken'));
-
+    console.log('Retrieved token from local storage:', localStorage.getItem('authToken'));
     return localStorage.getItem('authToken');
-
   }
-
-
-  }
-
-
+}

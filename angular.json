@@ -35,8 +35,10 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/ngx-toastr/toastr.css",
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
+              
             ],
             "scripts": [],
             "server": "src/main.server.ts",
@@ -47,11 +49,12 @@
           },
           "configurations": {
             "production": {
+              
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "1mb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -59,7 +62,13 @@
                   "maximumError": "4kb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "fileReplacements": [
+                {
+                  "replace": "src/enviroments/environment.ts",
+                  "with": "src/enviroments/environment.prod.ts"
+                }
+              ]
             },
             "development": {
               "optimization": false,
@@ -73,7 +82,9 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
+              
               "buildTarget": "PRM_Module:build:production"
+              
             },
             "development": {
               "buildTarget": "PRM_Module:build:development"
@@ -100,8 +111,10 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/ngx-toastr/toastr.css",
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
+              
             ],
             "scripts": []
           }

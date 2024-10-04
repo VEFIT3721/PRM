@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../SERVICE/auth.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -10,12 +11,13 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   loginform!: FormGroup;
-   errorMessage: string = '';
+  errorMessage: string = '';
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private login: AuthService
+    private login: AuthService,
+    private toastr:ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -39,24 +41,33 @@ export class LoginComponent implements OnInit {
 
       this.login.login(loginData).subscribe(
         (response: any) => {
-          console.log('Login Successful:', response);
+          this.loginform.reset();
+
           if (response.token) {
             localStorage.setItem('authToken', response.token);
             this.router.navigate(['/dashboard']);
             this.login.startTimeoutTimer().subscribe(); // Start session timeout timer
+            this.toastr.success('Login Successful!', 'Success');
+            
           } else {
             console.error('Missing token in response');
+            this.toastr.error('Invalid Credentials!', 'Error');
             this.errorMessage = 'An error occurred during login.';
           }
         },
         (error: any) => {
           console.error('Login Error:', error);
           this.errorMessage = this.handleLoginError(error);
+          this.toastr.error('Invalid user name or password','error');
+          this.resetForm();
         }
       );
     } else {
-      console.log('Login failed');
+      alert('Login failed');
       this.errorMessage = 'Please check your credentials.';
+      this.toastr.error("Please check your credentials");
+      this.toastr.error(this.errorMessage, 'Error');
+      this.resetForm();
     }
   }
 
@@ -66,6 +77,13 @@ export class LoginComponent implements OnInit {
     } else {
       return 'An error occurred while logging in. Please try again later.';
     }
+  }
+  private resetForm(): void {
+    this.loginform.reset();
+    this.errorMessage = ''; // Clear error message
+    // Optionally, you can reapply validation errors if necessary
+    this.loginform.markAsPristine();
+    this.loginform.markAsUntouched();
   }
   }
 

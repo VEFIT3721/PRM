@@ -17,10 +17,10 @@ const routes: Routes = [{path:'register',component:UserRegistrationComponent},
   {
     path: '', component: HomeComponent,
     children: [
-      {path:'meeting',component:MeetingComponent,canActivate:[AuthGuard],data: { roles: ['Admin'] }},
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard], data: { roles: ['maker', 'Admin'] } },
-  { path: 'edit', component: MeetingDetailsComponent, canActivate: [AuthGuard], data: { roles: ['maker'] } },
-  { path: 'export', component: ExportComponent },
+      {path:'meeting',component:MeetingComponent,canActivate:[AuthGuard],data: { roles: ['ADMIN','USER','CHECKER'] }},
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard], data: { roles: ['', 'ADMIN','USER','CHECKER'] } },
+  { path: 'edit', component: MeetingDetailsComponent, canActivate: [AuthGuard], data: { roles: ['USER','ADMIN','CHECKER'] } },
+  { path: 'export', component: ExportComponent,canActivateChild:[AuthGuard],data:{roles:['ADMIN','USER']}},
       { path: 'register', component: UserRegistrationComponent },
       {path:'dashboard',component:DASHBOARDComponent}
     ]

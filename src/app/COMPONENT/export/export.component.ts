@@ -5,6 +5,7 @@ import moment from 'moment';
 import { MomentTimezone } from 'moment-timezone';
 import * as XLSX from 'xlsx';
 import { ReloadService } from '../../SERVICE/reload.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface MeetingData {
   ID: number;
@@ -27,15 +28,16 @@ interface MeetingData {
 export class ExportComponent {
   Export!: FormGroup<any>;
   MeetingData!: MeetingData[];
-  apiUrl = 'http://localhost:3000/api/export-excel';
+  apiUrl = 'https://vef.manappuram.com/api/export-excel';
   errorMessage: string = '';
   exportLimit = 10000;
   toDateError = false; // Flag for end date validation
+  
 
   
   
   
-  constructor(private http: HttpClient, private fb: FormBuilder, private pageReloadService: ReloadService) { }
+  constructor(private http: HttpClient, private fb: FormBuilder, private pageReloadService: ReloadService, private snackBar:MatSnackBar) { }
 
   ngOnInit(): void {
     this.Export = this.fb.group({
@@ -90,10 +92,22 @@ export class ExportComponent {
           link.href = url;
           link.download = 'prm_data.xlsx';
           link.click();
+            // Show success notification
+            this.snackBar.open('Export successful!', 'Close', {
+              duration: 3000,
+              verticalPosition: 'top',
+              horizontalPosition: 'center',
+            });
+            this.Export.reset();
         }, error => {
           console.error(error);
           if (error.status === 400 && error.error.message.includes('export limit')) {
-            this.errorMessage = `Maximum export limit is ${this.exportLimit}. Please refine your date range.`;
+            this.snackBar.open(`Maximum export limit is ${this.exportLimit}. Please refine your date range.`, 'Close', {
+              duration: 5000,
+              verticalPosition: 'top',
+              horizontalPosition: 'center',
+              panelClass: ['error-snackbar']
+            });
           } else {
             // Handle other errors (e.g., database connection, invalid data format)
             this.errorMessage = 'Failed to export data. Please try again later.';

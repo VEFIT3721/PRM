@@ -28,16 +28,13 @@
             <a class="nav-link active" aria-current="page" href="#">Home</a>
           </li>
           <li class="nav-item">
-            <button class="btn btn-outline-warning" *hasRole="['maker']" (click)="UpdateForm()">Update</button>
+            <button class="btn btn-outline-warning" *hasRole="['USER','ADMIN','CHECKER']" (click)="UpdateForm()">Update</button>
           </li>
           <li class="nav-item">
-            <button class="btn btn-outline-success" *hasRole="['Admin']" (click)="openEditForm()">Add Details</button>
-          </li>
-          <li class="nav-item">
-            <button class="btn btn-outline-danger" *hasRole="['Admin']" (click)="open()">ATRDASHBOARD</button>
+            <button class="btn btn-outline-success" *hasRole="['ADMIN','CHECKER','USER']" (click)="openEditForm()">Add Details</button>
           </li>
           <li class="nav-item" style="padding-left: 10px;">
-            <button class="btn btn-outline-danger" *hasRole="['Admin']" (click)="open()">EXPORT</button>
+            <button class="btn btn-outline-danger" *hasRole="['ADMIN','CHECKER']" (click)="open()">EXPORT</button>
           </li>
           <li class="naitem">
             <button class="btn btn-outline-warning" (click)="logout()">Logout</button>

@@ -1,23 +1,30 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { environment } from '../../enviroments/environment'; // Corrected path to environment
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmailService {
 
-  constructor(private http:HttpClient) { }
+  private apiUrl = `${environment.apiUrl}/send-meeting-email`; // Use environment variable
 
-  getEmail(meetingId: string,recipientEmail: string,DEPTHOD:string) {
+  constructor(private http: HttpClient) { }
+
+  getEmail(meetingId: string, recipientEmail: string, DEPTHOD: string): Observable<any> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    const jsonData = JSON.stringify({ meetingId, recipientEmail,DEPTHOD });
-    return this.http.post<any>('http://localhost:3000/api/send-meeting-email', jsonData, { headers })
+    const jsonData = JSON.stringify({ meetingId, recipientEmail, DEPTHOD });
+
+    return this.http.post<any>(this.apiUrl, jsonData, { headers })
+      .pipe(
+        catchError(this.handleError) // Apply error handling
+      );
   }
+
   private handleError(error: HttpErrorResponse) {
-  console.error(
-    `Backend returned code ${error.status}, body was: ${error.error}`);
-  return throwError('Something bad happened; please try again later.');
+    console.error(`Backend returned code ${error.status}, body was: ${error.error}`);
+    return throwError('Something bad happened; please try again later.');
   }
-  
 }

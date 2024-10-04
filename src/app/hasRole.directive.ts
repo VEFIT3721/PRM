@@ -21,11 +21,11 @@ export class HasRoleDirective {
       this.viewContainer.createEmbeddedView(this.templateRef); // Display element if authorized
     } else {
       this.viewContainer.clear(); // Hide element if not authorized
-      // this.snackBar.open('You do not have access to this section.', 'Close', {
-      //   duration: 2000, // Duration in milliseconds
-      //   horizontalPosition: 'right',
-      //   verticalPosition: 'top'
-      // });
+      this.snackBar.open('You do not have access to this section.', 'Close', {
+        duration: 2000, // Duration in milliseconds
+        horizontalPosition: 'right',
+        verticalPosition: 'top'
+      });
     }
   }
 }
