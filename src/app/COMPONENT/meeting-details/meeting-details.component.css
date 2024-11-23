@@ -1,19 +1,3 @@
-
-
-@media (min-width: 600px) {
-    .row mat-form-field {
-        flex: 1 1 calc(50% - 16px);
-        /* Two columns layout */
-    }
-}
-
-@media (min-width: 900px) {
-    .row mat-form-field {
-        flex: 1 1 calc(33% - 16px);
-        /* Three columns layout */
-    }
-}
-
 .row {
     display: flex;
     flex-wrap: wrap;
@@ -25,7 +9,6 @@
     mat-form-field {
         width: calc(50% - 10px);
         flex: 1 1;
-        
     }
 
 }
@@ -68,12 +51,8 @@ mat-card {
     /* Optional: add shadow for better visibility */
     border-radius: 8px;
     /* Optional: add rounded corners */
-    background: linear-gradient(90deg,
-                #f000,
-                #72706566)
+    background: linear-gradient(135deg, #e2dfde, #cf6b24);
     /* Gradient from pink to orange */
-    
-    
 }
 
 /* Responsive design adjustments */
@@ -122,7 +101,7 @@ mat-card {
     /* Prevent the image from repeating */
     min-height: 100vh;
     /* Ensure the component takes up the full height of the viewport */
-    /* background: linear-gradient(90deg, #ffa600e1, #9c27b0) */
+    background: linear-gradient(90deg, #ccff00, #9c27b0)
 }
 
 mat-card-header.mat-mdc-card-header {
@@ -141,8 +120,4 @@ mat-card-title.mat-mdc-card-title {
     color: white;
 
 
-}
-.mat-form-field .mat-form-field input {
-    color: #ff0000;
-    /* Replace with your desired text color */
 }

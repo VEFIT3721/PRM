@@ -21,7 +21,7 @@ export class AuthService {
   private tokenTimer: any;
   loggedInUser: DecodedToken | null = null;
   private tokenKey = 'authToken';
-  private readonly SESSION_TIMEOUT = 2 * 60 * 1000; // 10 minutes in milliseconds
+  private readonly SESSION_TIMEOUT = 20 * 60 * 1000; // 10 minutes in milliseconds
 
   constructor(private http: HttpClient, private router: Router, private jwtHelper:JwtHelperService) {
     this.checkSessionOnInit();
@@ -164,3 +164,4 @@ export class AuthService {
   }
 
 }
+

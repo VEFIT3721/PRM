@@ -1,4 +1,4 @@
-<div class="card-container">
+<!-- <div class="card-container">
   <mat-card>
     <mat-card-header>
 <mat-card-title>
@@ -16,7 +16,7 @@
   </form>
   <div *ngIf="meetingDetails">
     <form [formGroup]="meetingDetailsForm" (ngSubmit)="onSubmit()">
-        <div mat-dialog-content>
+        <div mat-card-content>
             <div class="row">
         <mat-form-field appearance="outline">
           <mat-label>Conducted Date:</mat-label>
@@ -77,8 +77,130 @@
           </mat-form-field>
           <span *ngIf="userRole == 'maker'"></span>
         </div>
+        
       <button mat-raised-button color="primary" type="submit" *ngIf="userRole === 'maker' && meetingDetailsForm.valid">Save Changes</button>
         </div>
     </form>
   </div>
-      </mat-card>
+      </mat-card> -->
+
+      <!-- updated code include file upload and download and Include Mis_status -->
+      <div class="card-container">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>
+              <h2>Meeting Details</h2>
+            </mat-card-title>
+          </mat-card-header>
+          <form [formGroup]="meetingSearchForm" (ngSubmit)="onSearchMeetingId()">
+            <div mat-card-content>
+              <mat-form-field appearance="outline">
+                <mat-label>MeetingId:</mat-label>
+                <input matInput="text" id="meetingId" formControlName="meetingId" required />
+              </mat-form-field>
+            </div>
+            <button mat-raised-button color="warn" type="submit">Search</button>
+          </form>
+          <div *ngIf="meetingDetails">
+            <form [formGroup]="meetingDetailsForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+              <div mat-card-content>
+                <div class="row">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Conducted Date:</mat-label>
+                    <input matInput disabled [value]="meetingDetails.ConductedDate | date : 'dd/MM/yyyy'" />
+                  </mat-form-field>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Vertical Name:</mat-label>
+                    <input matInput disabled [value]="meetingDetails.VerticalName" />
+                  </mat-form-field>
+                </div>
+                <div class="row">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Conducted Person:</mat-label>
+                    <input matInput disabled [value]="meetingDetails.ConductedPerson" />
+                  </mat-form-field>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Department:</mat-label>
+                    <input matInput disabled [value]="meetingDetails.department" />
+                  </mat-form-field>
+                </div>
+                <div class="row">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Department Hod:</mat-label>
+                    <input matInput disabled [value]="meetingDetails.DeptHod" />
+                  </mat-form-field>
+                  <mat-form-field appearance="outline">
+                    <mat-label>HOD Employee Code:</mat-label>
+                    <input matInput disabled [value]="meetingDetails.EmpCode" />
+                  </mat-form-field>
+                </div>
+                <div class="row">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Actionable_Points:</mat-label>
+                    <input matInput disabled [value]="meetingDetails.ActionPoint" />
+                  </mat-form-field>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Target_Date:</mat-label>
+                    <input matInput disabled [value]="meetingDetails.TargetDate | date : 'dd/MM/yyyy'" />
+                  </mat-form-field>
+                </div>
+                <div class="row">
+                  <mat-form-field appearance="outline">
+                    <mat-label>MIS_CORDINATOR:</mat-label>
+                    <input matInput disabled [value]="meetingDetails.MisCordinator" />
+                  </mat-form-field>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Remark</mat-label>
+                    <input matInput disabled [value]="meetingDetails.Remark" />
+                  </mat-form-field>
+                  <span *ngIf="userRole == 'maker'"></span>
+                </div>
+                <div class="row">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Final Remark</mat-label>
+                    <mat-select formControlName="finalRemark">
+                      <mat-option *ngFor="let val of finalRemark" [value]="val">{{
+                        val
+                        }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <!-- <span *ngIf="userRole == 'maker'"></span> -->
+                  <mat-form-field appearance="outline">
+                    <mat-label>MIS_STATUS</mat-label>
+                    <input matInput disabled [value]="meetingDetails.MIS_STATUS" />
+                  </mat-form-field>
+                </div>
+                <div *ngIf="meetingFiles && meetingFiles.length > 0">
+                  <h3>Uploaded Files:</h3>
+                  <div *ngFor="let file of meetingFiles">
+                    <button mat-raised-button color="warn" (click)="downloadFile(file.fileUrl, file.fileName)"
+                      class="button-content">
+                      <mat-icon style="padding-bottom: 15px;">download</mat-icon>download
+                    </button>
+                  </div>
+      
+                </div>
+                <div class="row">
+                  <label for="fileUpload" mat-raised-button color="primary" style="padding-top: 22px;">
+                    <mat-icon>cloud_upload</mat-icon>
+                    Upload Document
+                  </label>
+                  <input type="file" id="fileUpload" (change)="onFileChange($event)"
+                    accept=".pdf,.pptx,.docx,.xlsx,.csv,.jpg,.png" hidden />
+                </div>
+                <!-- View Button -->
+                <!-- <button *ngIf="uploadedFileUrl" mat-icon-button (click)="onViewFile(file.fileUrl)">
+                  <mat-icon>visibility</mat-icon>
+                </button> -->
+                <mat-progress-bar mode="determinate" *ngIf="isUploading" [value]="uploadProgress"></mat-progress-bar>
+              </div>
+              <mat-card-actions>
+                <button mat-raised-button color="primary" type="submit"
+                  *ngIf="userRole === 'maker' && meetingDetailsForm.valid">
+                  Save Changes
+                </button>
+              </mat-card-actions>
+            </form>
+          </div>
+        </mat-card>
+      </div>

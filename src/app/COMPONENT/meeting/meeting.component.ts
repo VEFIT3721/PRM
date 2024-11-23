@@ -11,7 +11,7 @@ interface MeetingRresult{
   ConductedPerson: String;
   department: String;
   VerticalName: String;
-  MisCordinator: String;
+  Mis_Cordinator: String;
   DeptHod: String;
   EMAIL_ID:String
 }
@@ -23,7 +23,7 @@ interface MeetingRresult{
 })
 export class MeetingComponent {
   Remark: string[] = [
-    'in-progress',
+    'In-Progress',
     'Resolved',
     'Rejected'
   ]
@@ -33,6 +33,7 @@ export class MeetingComponent {
   meetingId: string = '';
   meetingForm!: FormGroup<any>;
   meetingSearchForm!: FormGroup;
+
   @ViewChild('empCodeInput') empCodeInput!: ElementRef; // Reference to the input element
   maxWords = 1000;
   showCard = true; // Hide the card on cancel
@@ -52,7 +53,7 @@ export class MeetingComponent {
       'EmpCode': ['', Validators.required],
       'ActionPoint': ['', Validators.required],
       'TargetDate': ['', Validators.required],
-      'MisCordinator': ['', Validators.required],
+      'Mis_Cordinator': ['', Validators.required],
       'Remark': ['', Validators.required],
     });
     this.meetingSearchForm = this._fb.group({

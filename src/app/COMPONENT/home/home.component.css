@@ -1,22 +1,97 @@
-
-
-.btn-outline-success {
-    margin-left: 13px;
-    margin-right: 14px;
-    padding-left: 0.75rem;
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
 }
 
-.btn-outline-warning {
-    margin-left: 13px;
-    padding-left: 1.75rem;
-    padding-right: 1.75rem;
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
-/* Add this to your global styles.css or component-specific styles */
-.disabled {
-    pointer-events: none;
-    /* Disable mouse events */
-    opacity: 0.5;
-    /* Make it appear faded */
-    cursor: not-allowed;
-    /* Change cursor to indicate it's not clickable */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #FFCC00;
+    color: white;
+}
+
+.logo {
+    height: 40px;
+    /* Adjust logo size */
+}
+
+.main-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    /* Prevent overflow */
+}
+
+.sidebar {
+    background-color: #a6bab6;
+    width: 250px;
+    min-width: 250px;
+    /* Add box-shadow for better visual separation */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 10px;
+    cursor: pointer;
+    position: relative;
+}
+
+li:hover {
+    background-color: #ddd;
+}
+
+ul ul {
+    display: none;
+    /* Hide submenus by default */
+    padding-left: 15px;
+    /* Indent submenus */
+}
+
+ul li ul {
+    display: block;
+    /* Show dropdown when parent is open */
+}
+
+ul li ul li {
+    background-color: #e9ecef;
+    /* Different background for submenus */
+}
+
+ul li ul li:hover {
+    background-color: #ddd;
+    /* Highlight on hover */
+}
+
+.content {
+    flex: 1;
+    /* Allow content area to expand */
+    padding: 20px;
+    /* Add padding for spacing */
+    overflow-y: auto;
+    /* Enable vertical scrolling if content overflows */
+    background-color: #ffffff;
+    /* Set a white background for content area */
+    /* Optional: add box-shadow for better separation */
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+        /* Hide sidebar on small screens */
+    }
 }

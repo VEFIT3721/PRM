@@ -19,6 +19,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
 
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './COMPONENT/login/login.component';
@@ -35,6 +36,9 @@ import { DASHBOARDComponent } from './COMPONENT/dashboard/dashboard.component';
 import { AuthInterceptor } from './auth.interceptor';
 import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MISUPDATEComponent } from './COMPONENT/misupdate/misupdate.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +49,8 @@ import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
     HasRoleDirective,
     MeetingDetailsComponent,
     ExportComponent,
-    DASHBOARDComponent
+    DASHBOARDComponent,
+    MISUPDATEComponent
   ],
   imports: [
     BrowserModule,
@@ -62,6 +67,10 @@ import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
     MatNativeDateModule,
     MatRadioModule,
     MatDialogModule,
+    MatPaginatorModule,
+    MatProgressBarModule, 
+  
+    
     ToastrModule.forRoot({
       timeOut: 3000,
   positionClass: 'toast-top-right',
@@ -73,6 +82,7 @@ import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
     MatProgressSpinnerModule,
     MatPaginatorModule,
   ],
+  
   providers: [
     DatePipe,
     provideClientHydration(),

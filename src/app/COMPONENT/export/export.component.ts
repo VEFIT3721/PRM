@@ -1,9 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import moment from 'moment';
-import { MomentTimezone } from 'moment-timezone';
-import * as XLSX from 'xlsx';
 import { ReloadService } from '../../SERVICE/reload.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 

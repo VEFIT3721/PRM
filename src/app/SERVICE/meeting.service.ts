@@ -38,6 +38,9 @@ getProducts(): Observable<any[]> {
   return this.http.get<any[]>('http://localhost:3000/api/data');
 }
 
+  getMeetingStatus(): Observable<any> {
+    return this.http.get<any>('http://localhost:3000/api/meeting-status');
+  }
 getMeetingDetailsById(meetingId: string): Observable<any> {
   const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('authToken')}`); // Include JWT token
 
@@ -47,7 +50,7 @@ getMeetingDetailsById(meetingId: string): Observable<any> {
     );
 }
 
- updateMeetingRemark(meetingId: string, remark: string,updatedBy: string): Observable<any> {
+ updateMeetingRemark(meetingId: string, remark: string,updatedBy: string,formData:FormData): Observable<any> {
    console.log('updateMeetingRemark called with:', meetingId, remark);
    if (this.authService.getUserRole() !== 'maker') {
 
@@ -67,7 +70,56 @@ getMeetingDetailsById(meetingId: string): Observable<any> {
       catchError(this.handleError)
     );
 }
+//  updateMISRemark(meetingId: string, misRemark: string, updatedBy: string): Observable<any> {
+//     return this.http.put(`http:localhost:3000/api/${meetingId}/mis-remark`, { misRemark, updatedBy });
+//   }
+updateMISRemark(meetingId: string, updatedRemark: string, updatedBy: string,userRemark:string): Observable<any> {
+    console.log('updateMISRemark called with:', meetingId, updatedRemark);
+    // if (this.authService.getUserRole() !== 'maker') {
+    //   console.error('User does not have the necessary role to update the meeting remark');
+    //   throw new Error('Unauthorized: User does not have the necessary role');
+    // }
+    const token = this.authService.getToken();
+    console.log("Received Token:-", token)
+    const headers = new HttpHeaders().set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${this.authService.getToken()}`
+      );
+    const jsonData = JSON.stringify({
+     MIS_STATUS: updatedRemark, // Ensure this matches what the backend expects
+      updatedBy: updatedBy,
+    userRemark:userRemark
+    });
+    console.log('Payload to send:', jsonData); // Log the payload
+    return this.http.put<any>(`http://localhost:3000/api/meetings/${meetingId}/misRemark`, jsonData, { headers })
+      .pipe(
+        catchError(this.handleError)
+      )
+  }
 
+  uploadFile(meetingId: string, file: Blob, remark: string): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file, 'uploadedFile');
+    formData.append('remark', remark);
+    formData.append('meetingId', meetingId);
+
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.authService.getToken()}`);
+    return this.http.put<any>(`http://localhost:3000/api/meetings/${meetingId}/remark`, formData, { headers })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  // Fetch files associated with a meeting ID
+  getMeetingFiles(meetingId: string): Observable<any[]> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('authToken')}`);
+    return this.http.get<any[]>(`http://localhost:3000/api/get-files-by-meeting-id/${meetingId}`, { headers })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+   updateUserRemark(meetingId: string, updatedRemark: string, updatedBy: string): Observable<any> {
+    return this.http.put(`http:localhost:3000/api/${meetingId}/user-remark`, { updatedRemark, updatedBy });
+  }
 private handleError(error: HttpErrorResponse) {
   console.error(
     `Backend returned code ${error.status}, body was: ${error.error}`);
