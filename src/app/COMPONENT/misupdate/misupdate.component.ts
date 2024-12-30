@@ -5,6 +5,10 @@ import { MeetingService } from '../../SERVICE/meeting.service';
 import { AuthService } from '../../SERVICE/auth.service';
 import { ToastrService } from 'ngx-toastr';
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
 export interface MeetingDetails {
   meetingId: string;
   ConductedDate: string;
@@ -16,10 +20,14 @@ export interface MeetingDetails {
   ActionPoint: string;
   TargetDate: string;
   MisCordinator: string;
+<<<<<<< HEAD
   User_Remark: string;
   MIS_STATUS: string;
   
   
+=======
+  Remark: string;
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
 }
 
 @Component({
@@ -28,12 +36,18 @@ export interface MeetingDetails {
   styleUrl: './misupdate.component.css'
 })
 export class MISUPDATEComponent implements OnInit {
+<<<<<<< HEAD
   meetingId: any;
+=======
+
+ meetingId: any;
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
   meetingDetails:MeetingDetails|undefined
   meetingDetailsForm!: FormGroup;
   userRole: string = '';
   meetingSearchForm!: FormGroup;
   originalRemark: string = '';
+<<<<<<< HEAD
   uploadedFileUrl!: string;
   fileType!: string;
   downloadFileUrl!: string;
@@ -45,6 +59,9 @@ export class MISUPDATEComponent implements OnInit {
   uploadedFileExtension!: string; // To store the file extension
  
    MIS_STATUS: string[] = [
+=======
+   MIS_Status: string[] = [
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
     'in-progress',
     'Resolved',
     'Rejected'
@@ -67,8 +84,12 @@ export class MISUPDATEComponent implements OnInit {
       ActionPoint: [''], // Prepopulated, not editable
       TargetDate: [''], // Prepopulated, not editable
       MisCordinator: [''], // Prepopulated, not editable
+<<<<<<< HEAD
       User_Remark: [''], // Prepopulated, not editable
       MIS_STATUS: ['', Validators.required],
+=======
+      MIS_Status: ['', Validators.required],
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
 
     });
     this.meetingSearchForm = this._fb.group({
@@ -91,6 +112,7 @@ export class MISUPDATEComponent implements OnInit {
             ActionPoint: response[7],
             TargetDate: response[8],
             MisCordinator: response[9],
+<<<<<<< HEAD
             User_Remark: response[10],
             MIS_STATUS: response[16]
             
@@ -119,6 +141,13 @@ export class MISUPDATEComponent implements OnInit {
           this.meetingDetailsForm.disable();
         }
 
+=======
+            Remark: response[10],
+            
+          };
+          this.meetingDetails = meetingDetails;
+          this.originalRemark = meetingDetails.Remark; // Store original remark
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
         } else {
           console.warn('No meeting details found for ID:', this.meetingId);
           // Handle case where no meeting is found (optional)
@@ -129,6 +158,7 @@ export class MISUPDATEComponent implements OnInit {
       });
   }
  
+<<<<<<< HEAD
   // fetchMeetingFiles(meetingId:string){
   //    this.meetingService.getMeetingFiles(meetingId)
   //     .subscribe((files) => {
@@ -262,6 +292,9 @@ fetchMeetingFiles(meetingId: string) {
 }
 
 
+=======
+  
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
   onSearchMeetingId() {
     if (this.meetingSearchForm.valid) {
       const meetingId = this.meetingSearchForm.get('meetingId')?.value;
@@ -270,6 +303,7 @@ fetchMeetingFiles(meetingId: string) {
       this.meetingDetailsForm.reset();
     }
   }
+<<<<<<< HEAD
   onSubmit() {
     console.log('Form Values on Submit:', this.meetingDetailsForm.value);
     if (this.meetingDetailsForm.valid) {
@@ -533,9 +567,52 @@ onViewFile(fileUrl: string, fileType: string) {
     window.open(officeViewerUrl, '_blank');
   } else {
     this.toastr.warning('Preview is not supported for this file type.');
+=======
+  
+ onSubmit() {
+  console.log('Form Values on Submit:', this.meetingDetailsForm.value);
+  if (this.meetingDetailsForm.valid) {
+    console.log('Form is valid');
+    
+    const updatedRemark = this.meetingDetailsForm.get('MIS_STATUS')?.value;
+    const meetingId = this.meetingDetails?.meetingId; // Extract ID from fetched data
+    const updatedBy = String(this.authService.getEmpCode()); 
+    const userRemark = this.meetingDetailsForm.get('Remark')?.value; // Get user's remark
+
+    console.log('updated remark:', updatedRemark);
+    console.log('userRemark:', userRemark);
+    if (!meetingId) {
+      console.error('Meeting ID not available');
+      return; // Handle missing ID error
+    }
+
+    // Check if user's final remark is "Resolved"
+    if (updatedRemark === 'Resolved' && userRemark !== 'Resolved') {
+      // Show error message if conditions are not met
+      this.toastr.error("User final remarks must be 'Resolved' to update MIS_STATUS to 'Resolved'");
+      return; // Prevent form submission
+    }
+    this.meetingDetailsForm.reset()
+    // Proceed with updating the MIS remark
+    this.meetingService.updateMISRemark(meetingId, updatedRemark, updatedBy,userRemark)
+      .subscribe(response => {
+        // Handle successful update
+        console.log('Remark updated successfully');
+        this.toastr.success("Remark updated successfully");
+      }, error => {
+        // Handle error during update
+        console.error('Error updating remark:', error);
+      });
+    
+  } else {
+    console.log('Form is invalid');
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
   }
 }
 
 }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf

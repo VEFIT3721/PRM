@@ -110,20 +110,6 @@ export class MeetingService {
   //     })
   //   );
   // }
-  getMeetingFiles(meetingId: string): Observable<any[]> {
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('authToken')}`);
-    return this.http.get<any[]>(`${this.apiUrl}/get-files-by-meeting-id/${meetingId}`, { headers }).pipe(
-      catchError((error: HttpErrorResponse) => {
-        if (error.status === 404) {
-          const errorMessage = error.error.message || 'No files found for this meeting ID.';
-          return throwError(() => new Error(errorMessage));
-        } else {
-          return throwError(() => new Error('Something went wrong; please try again later.'));
-        }
-      })
-    );
-  }
-  
   
   
   getMeetingFilesPreview(meetingId: string): Observable<any[]> {
