@@ -22,12 +22,13 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 
 
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './COMPONENT/login/login.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { UserRegistrationComponent } from './COMPONENT/user-registration/user-registration.component';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withFetch } from '@angular/common/http';
 import { HomeComponent } from './COMPONENT/home/home.component';
 import { MeetingComponent } from './COMPONENT/meeting/meeting.component';
 import { HasRoleDirective } from './hasRole.directive';
@@ -35,10 +36,18 @@ import { MeetingDetailsComponent } from './COMPONENT/meeting-details/meeting-det
 import { ExportComponent } from './COMPONENT/export/export.component';
 import { DatePipe } from '@angular/common';
 import { DASHBOARDComponent } from './COMPONENT/dashboard/dashboard.component';
+<<<<<<< HEAD
 import { MISUPDATEComponent } from './COMPONENT/misupdate/misupdate.component';
 import { ForgotComponent } from './COMPONENT/forgot/forgot.component';
 import { ResetPasswordComponent } from './COMPONENT/reset-password/reset-password.component';
 import { UsermasterComponent } from './COMPONENT/usermaster/usermaster.component';
+=======
+import { AuthInterceptor } from './auth.interceptor';
+import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
+
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MISUPDATEComponent } from './COMPONENT/misupdate/misupdate.component';
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
 
 @NgModule({
   declarations: [
@@ -51,10 +60,14 @@ import { UsermasterComponent } from './COMPONENT/usermaster/usermaster.component
     MeetingDetailsComponent,
     ExportComponent,
     DASHBOARDComponent,
+<<<<<<< HEAD
     MISUPDATEComponent,
     ForgotComponent,
     ResetPasswordComponent,
     UsermasterComponent
+=======
+    MISUPDATEComponent
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
   ],
   imports: [
     BrowserModule,
@@ -72,23 +85,40 @@ import { UsermasterComponent } from './COMPONENT/usermaster/usermaster.component
     MatNativeDateModule,
     MatRadioModule,
     MatDialogModule,
+<<<<<<< HEAD
     ToastrModule.forRoot({
       timeOut: 3000,  // Delay in milliseconds before toast disappears
      closeButton: true, // Add a close button
      progressBar: true, // Display a progress bar
      positionClass: 'toast-top-right', // Position (e.g., 'toast-top-right', 'toast-bottom-full-width'),
    }),
+=======
+    MatPaginatorModule,
+    MatProgressBarModule, 
+  
+    
+    ToastrModule.forRoot({
+      timeOut: 3000,
+  positionClass: 'toast-top-right',
+  preventDuplicates: true,
+  progressBar: true,
+    }), // Add ToastrModule to imports
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
     MatSnackBarModule,
     MatTableModule,
     MatProgressSpinnerModule,
     MatPaginatorModule,
     MatProgressBarModule,
   ],
+  
   providers: [
     DatePipe,
     provideClientHydration(),
     provideAnimationsAsync(),
-    provideHttpClient(withFetch())
+    provideHttpClient(withFetch()),
+    JwtHelperService,
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

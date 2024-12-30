@@ -11,7 +11,7 @@ interface MeetingRresult{
   ConductedPerson: String;
   department: String;
   VerticalName: String;
-  MisCordinator: String;
+  Mis_Cordinator: String;
   DeptHod: String;
   EMAIL_ID:String;
   MIS_EMAIL:String;
@@ -23,8 +23,13 @@ interface MeetingRresult{
   styleUrl: './meeting.component.css'
 })
 export class MeetingComponent {
+<<<<<<< HEAD
   User_Remark: string[] = [
     'in-progress',
+=======
+  Remark: string[] = [
+    'In-Progress',
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
     'Resolved',
     'Rejected'
   ]
@@ -40,8 +45,13 @@ export class MeetingComponent {
   meetingId: string = '';
   meetingForm!: FormGroup<any>;
   meetingSearchForm!: FormGroup;
+
   @ViewChild('empCodeInput') empCodeInput!: ElementRef; // Reference to the input element
   maxWords = 1000;
+<<<<<<< HEAD
+=======
+  showCard = true; // Hide the card on cancel
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
 
   
     
@@ -58,10 +68,15 @@ export class MeetingComponent {
       'EmpCode': ['', Validators.required],
       'ActionPoint': ['', Validators.required],
       'TargetDate': ['', Validators.required],
+<<<<<<< HEAD
       'MisCordinator': ['', Validators.required],
       'User_Remark': ['', Validators.required],
       'MIS_STATUS': ['', Validators.required],
       'MIS_EMAIL':['',Validators.required],
+=======
+      'Mis_Cordinator': ['', Validators.required],
+      'Remark': ['', Validators.required],
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
     });
     this.meetingSearchForm = this._fb.group({
       meetingId: ['', Validators.required]
@@ -71,6 +86,26 @@ export class MeetingComponent {
     const today = new Date().toISOString().slice(0, 10);
     return today;
   }
+    getWordCount(text: string): number {
+    if (!text) return 0;
+    return text.trim().split(/\s+/).length;
+  }
+
+  isWordLimitExceeded(text: string): boolean {
+    return this.getWordCount(text) > this.maxWords;
+  }
+
+  onActionPointInput(event: Event) {
+    const target = event.target as HTMLTextAreaElement; // Type assertion
+    const value = target.value;
+    // Trim text to the first 1000 words if needed
+    const words = value.trim().split(/\s+/);
+    if (words.length > this.maxWords) {
+      const truncatedText = words.slice(0, this.maxWords).join(' ');
+      this.meetingForm.get('ActionPoint')?.setValue(truncatedText);
+    }
+  }
+  
 
   getWordCount(text: string): number {
     if (!text) return 0;
@@ -103,7 +138,11 @@ export class MeetingComponent {
     if (this.meetingForm.valid) {
       console.log('Data sent to backend:', this.meetingForm.value);
       const meetingData = this.meetingForm.value; // Retrieve form values
+<<<<<<< HEAD
       const createdBy = this.authService.getEmpCode(); // Fetch createdBy value from AuthService
+=======
+       const createdBy = this.authService.getEmpCode(); // Fetch createdBy value from AuthService
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
       meetingData.CREATED_BY = createdBy; // Add CREATED_BY to meeting data
 
           
@@ -134,6 +173,8 @@ export class MeetingComponent {
             const meetingId = response.meetingId; // Assuming meetingId is in the response
             this.showSuccessNotification(meetingId);
             this.meetingForm.reset();
+             this.showCard = false; // Hide the card on cancel
+
 
              // Send email request using the service
           this.emailService.getEmail(meetingId, meetingData.EMAIL_ID, meetingData.DeptHod)
@@ -156,6 +197,10 @@ export class MeetingComponent {
               
           });
       }
+  }
+  onCancel() {
+    console.log("clicked")
+     this.showCard = false; // Hide the card on cancel
   }
   showSuccessNotification(meetingId: string) {
     // Implement your notification logic here (e.g., using a toast library)
@@ -181,4 +226,7 @@ export class MeetingComponent {
       });
     }
   }
+
   }
+
+   

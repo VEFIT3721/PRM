@@ -46,26 +46,39 @@ export class LoginComponent implements OnInit {
           if (response.token) {
             localStorage.setItem('authToken', response.token);
             this.router.navigate(['/dashboard']);
+<<<<<<< HEAD
             this.login.startTimeoutTimer().subscribe(); // Start session timeout timer
             this.toastr.success('Login Successful!', 'Success');
             
+=======
+            // this.login.startTimeoutTimer().subscribe(); // Start session timeout timer
+            this.toastr.success('Login Successful!', 'Success');
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
           } else {
             console.error('Missing token in response');
             this.toastr.error('Invalid Credentials!', 'Error');
             this.errorMessage = 'An error occurred during login.';
+            this.resetForm();
           }
         },
         (error: any) => {
           console.error('Login Error:', error);
           this.errorMessage = this.handleLoginError(error);
+<<<<<<< HEAD
           this.toastr.error('Invalid user name or password','error');
+=======
+          this.toastr.error('Invalid user name or password');
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
           this.resetForm();
         }
       );
     } else {
       alert('Login failed');
       this.errorMessage = 'Please check your credentials.';
+<<<<<<< HEAD
       this.toastr.error("Please check your credentials");
+=======
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
       this.toastr.error(this.errorMessage, 'Error');
       this.resetForm();
     }
@@ -78,7 +91,11 @@ export class LoginComponent implements OnInit {
       return 'An error occurred while logging in. Please try again later.';
     }
   }
+<<<<<<< HEAD
   private resetForm(): void {
+=======
+    private resetForm(): void {
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
     this.loginform.reset();
     this.errorMessage = ''; // Clear error message
     // Optionally, you can reapply validation errors if necessary
@@ -86,4 +103,3 @@ export class LoginComponent implements OnInit {
     this.loginform.markAsUntouched();
   }
   }
-

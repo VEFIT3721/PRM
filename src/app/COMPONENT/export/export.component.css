@@ -126,3 +126,15 @@ mat-card-title.mat-mdc-card-title {
     padding-left: 353px;
     padding-top: 62px;
 }
+/* Example styles for snackbar notifications */
+.success-snackbar {
+    background-color: #4caf50;
+    /* Green */
+    color: #ffffff;
+}
+
+.error-snackbar {
+    background-color: #f44336;
+    /* Red */
+    color: #ffffff;
+}

@@ -1,9 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import moment from 'moment';
-import { MomentTimezone } from 'moment-timezone';
-import * as XLSX from 'xlsx';
 import { ReloadService } from '../../SERVICE/reload.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -38,7 +35,11 @@ export class ExportComponent {
   
   
   
+<<<<<<< HEAD
   constructor(private http: HttpClient, private fb: FormBuilder, private pageReloadService: ReloadService, private snackBar:MatSnackBar) { }
+=======
+  constructor(private http: HttpClient, private fb: FormBuilder, private pageReloadService: ReloadService, private snackBar: MatSnackBar) { }
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
 
   ngOnInit(): void {
     this.Export = this.fb.group({
@@ -80,8 +81,14 @@ export class ExportComponent {
         }
       } catch (error) {
         console.error('Error validating dates:');
-        alert("to date should not less than from date")
+         this.snackBar.open('To date should not be less than from date', 'Close', {
+          duration: 3000,
+          verticalPosition: 'top',
+          horizontalPosition: 'center',
+          panelClass: ['error-snackbar']
+        });
         return;
+        
       }
     // passed fromDate and Todate through query params
       const queryParams = `fromDate=${ExportData.fromDate}&toDate=${ExportData.toDate}`;
@@ -93,6 +100,7 @@ export class ExportComponent {
           link.href = url;
           link.download = 'prm_data.xlsx';
           link.click();
+<<<<<<< HEAD
             // Show success notification
             this.snackBar.open('Export successful!', 'Close', {
               duration: 3000,
@@ -100,6 +108,15 @@ export class ExportComponent {
               horizontalPosition: 'center',
             });
             this.Export.reset();
+=======
+           // Show success notification
+          this.snackBar.open('Export successful!', 'Close', {
+            duration: 3000,
+            verticalPosition: 'top',
+            horizontalPosition: 'center',
+          });
+          this.Export.reset();
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
         }, error => {
           console.error(error);
           if (error.status === 400 && error.error.message.includes('export limit')) {

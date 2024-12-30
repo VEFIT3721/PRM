@@ -1,16 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { MeetingService } from '../../SERVICE/meeting.service';
 import { HttpClient } from '@angular/common/http';
-import { MatDialog } from '@angular/material/dialog';
-import { MeetingComponent } from '../meeting/meeting.component';
 import { AuthService } from '../../SERVICE/auth.service';
 import { Router } from '@angular/router';
+<<<<<<< HEAD
 import { MeetingDetailsComponent } from '../meeting-details/meeting-details.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+=======
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
 interface SubmenuItem {
   label: string;
   roles: string[];
   action: string;
+<<<<<<< HEAD
+}
+
+interface Menu {
+  name: string;
+  route: string;
+  submenu: SubmenuItem[]; // Use the defined interface here
+  isOpen: boolean;
+  roles: string[];
+=======
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
 }
 
 interface Menu {
@@ -21,7 +35,6 @@ interface Menu {
   roles: string[];
 }
 
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -29,6 +42,7 @@ interface Menu {
   host: { ngSkipHydration: 'true' }
   
 })
+<<<<<<< HEAD
 export class HomeComponent implements OnInit {
   constructor(private authService:AuthService,private router:Router,private snackBar:MatSnackBar){}
   menus: Menu[] = [
@@ -67,6 +81,43 @@ export class HomeComponent implements OnInit {
       action:''
     }], isOpen: false, roles: ['ADMIN'] }
     
+=======
+export class HomeComponent  {
+
+  constructor(private authService:AuthService,private router:Router,private snackBar:MatSnackBar){}
+  menus: Menu[] = [
+    { name: 'Dashboard', route: 'home', submenu: [{
+      label: 'PRODUCT', roles: ['Admin', 'User'],
+      action: ''
+    }, {
+      label: 'DATE', roles: ['Admin'],
+      action: ''
+    }], isOpen: false, roles: ['Admin', 'User'] },
+    { name: 'Settings', route: 'settings', submenu: [{
+      label: 'Profile', roles: ['User', 'Admin'],
+      action: ''
+    }, {
+      label: 'Account', roles: ['Admin'],
+      action: ''
+    }], isOpen: false, roles: ['Admin', 'User'] },
+    { name: 'Reports', route: 'home', submenu: [{
+      label: 'StateWise Disbursement', roles: ['Admin'],
+      action: ''
+    }, {
+      label: 'PRM REPORT', roles: ['Admin', 'maker'],
+      action: ''
+    }], isOpen: false, roles: ['Admin'] },
+    { name: 'PRM Details', route: 'home', submenu: [{
+      label: 'Add Meeting', roles: ['Admin'],
+      action: ''
+    }, {
+      label: 'Update Meeting', roles: ['Admin','User'],
+      action: ''
+    }, {
+      label: 'Mis Update', roles: ['Admin','maker'],
+      action: ''
+    }], isOpen: false, roles: ['Admin'] }
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
   ];
 
  
@@ -80,7 +131,11 @@ export class HomeComponent implements OnInit {
 
   // Mapping of submenu labels to routes
   private submenuRoutes: { [key: string]: string } = {
+<<<<<<< HEAD
     'Add Meeting': 'meeting',
+=======
+    'Add Meeting': 'register',
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
     'Update Meeting': 'update-meeting',
     'Mis Update': 'misupdate',
     'Profile': 'profile',
@@ -89,6 +144,7 @@ export class HomeComponent implements OnInit {
     'PRM REPORT': 'reports',
     'PRODUCT': 'graph',
     'DATE': 'bargap',
+<<<<<<< HEAD
     'User_Creation':'register',
     'User_Master':'user'
   };
@@ -97,6 +153,14 @@ export class HomeComponent implements OnInit {
   private hasAccess(requiredRoles: string[]): boolean {
     const USERRole = this.authService.getUserRole() as string // Get the current USER's role
     return requiredRoles.includes(USERRole); // Check if USER's role is in the required roles
+=======
+  };
+
+  // Check if the User has the required role for a menu/submenu
+  private hasAccess(requiredRoles: string[]): boolean {
+    const UserRole = this.authService.getUserRole() as string // Get the current User's role
+    return requiredRoles.includes(UserRole); // Check if User's role is in the required roles
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
   }
 
   // Handle menu click
@@ -141,7 +205,23 @@ export class HomeComponent implements OnInit {
     menu.isOpen = !menu.isOpen;
   }
 
+<<<<<<< HEAD
 
  
+=======
+  // exportToExcel() {
+  //       this.http.get(this.apiUrl, { responseType: 'blob' })
+  //     .subscribe(blob => {
+  //       const url = window.URL.createObjectURL(blob);
+  //       const link = document.createElement('a');
+  //       link.href = url;
+  //       link.download = 'meeting_data.xlsx';
+  //       link.click();
+  //     });
+  // }
+  // Export() {
+  //   this.router.navigate(['export']);
+  // }
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
 }
 

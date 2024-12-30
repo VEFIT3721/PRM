@@ -138,6 +138,7 @@
     left: 80%;
   }
 
+<<<<<<< HEAD
   /* Custom toastr styles */
 .toast-success {
   background-color: #28a745; /* Green background for success */
@@ -160,3 +161,6 @@
 }
 
 /* You can further customize toast positions and other aspects */
+=======
+    
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf

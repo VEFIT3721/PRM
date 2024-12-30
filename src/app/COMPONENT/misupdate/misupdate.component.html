@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <div class="card-container"></div>
+=======
+<div class="card-container">
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
     <mat-card>
         <mat-card-header>
             <mat-card-title>
@@ -63,13 +67,19 @@
                             <input matInput disabled [value]="meetingDetails.MisCordinator">
                         </mat-form-field>
                         <mat-form-field appearance="outline">
+<<<<<<< HEAD
                             <mat-label>User_Remark</mat-label>
                             <input matInput disabled [value]="meetingDetails.User_Remark">
+=======
+                            <mat-label>Remark</mat-label>
+                            <input matInput disabled [value]="meetingDetails.Remark">
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
                         </mat-form-field>
                         <span *ngIf="userRole == 'maker'"></span>
                     </div>
                     <div class="row">
                         <mat-form-field appearance="outline">
+<<<<<<< HEAD
                             <mat-label>Mis_Remark</mat-label>
                             <input matInput disabled [value]="meetingDetails.MIS_STATUS">
                         </mat-form-field>
@@ -102,3 +112,19 @@
             </form>
         </div>
     </mat-card>
+=======
+                            <mat-label>MIS Remark</mat-label>
+                            <mat-select formControlName="MIS_Status">
+                                <mat-option *ngFor="let val of MIS_Status" [value]="val">{{val}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <span *ngIf="userRole == 'maker'"></span>
+                    </div>
+
+                    <button mat-raised-button color="primary" type="submit"
+                        *ngIf="userRole === 'maker' && meetingDetailsForm.valid">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </mat-card>y
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf

@@ -4,6 +4,7 @@
         <mat-card-title>Search Pending ATR Details</mat-card-title>
     </mat-card-header>
     <mat-card-content>
+<<<<<<< HEAD
         <div class="main-body">
             <mat-form-field>
                 <mat-label>Filter</mat-label>
@@ -53,5 +54,41 @@
                 <mat-paginator  [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator> 
             </div>
         </div>
+=======
+        <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+            <mat-form-field appearance="outline">
+                <mat-label>Employee Code</mat-label>
+                <input matInput formControlName="searchTerm" placeholder="Enter department or employee code">
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit">Search</button>
+        </form>
+
+        <mat-table *ngIf="atrDetails.length > 0" [dataSource]="atrDetails">
+            <!-- Define columns here -->
+            <ng-container matColumnDef="Empcode">
+                <mat-header-cell *matHeaderCellDef> Emp_Code </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.Empcode}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="DELAY_DAYS">
+                <mat-header-cell *matHeaderCellDef> Delay Days </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{ element.DELAY_DAYS }} </mat-cell>
+            </ng-container>
+
+
+            <ng-container matColumnDef="verticalName">
+                <mat-header-cell *matHeaderCellDef> Vertical Name </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.verticalName}} </mat-cell>
+            </ng-container>
+
+
+            <!-- Add more columns as needed -->
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+
+        <mat-spinner *ngIf="loading"></mat-spinner>
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
     </mat-card-content>
 </mat-card>

@@ -4,11 +4,18 @@
             <mat-card-title>
                 <h1>PRM Details</h1>
             </mat-card-title>
+<<<<<<< HEAD
 
         </mat-card-header>
         <form [formGroup]="meetingForm" (ngSubmit)="onSubmit()">
             <div mat-card-content>
 
+=======
+        </mat-card-header>
+        <div mat-card-content>
+
+            <form [formGroup]="meetingForm" (ngSubmit)="onSubmit()">
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
                 <div class="row">
                     <mat-form-field appearance="outline">
                         <mat-label>EMAIL </mat-label>
@@ -49,7 +56,11 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline">
                         <mat-label>Mis_Cordinator</mat-label>
+<<<<<<< HEAD
                         <input matInput formControlName="MisCordinator">
+=======
+                        <input matInput formControlName="Mis_Cordinator">
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
                     </mat-form-field>
                 </div>
                 <div class="row">
@@ -63,13 +74,19 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline">
                         <mat-label>Status</mat-label>
+<<<<<<< HEAD
                         <mat-select formControlName="User_Remark">
                             <mat-option *ngFor="let val of User_Remark" [value]="val">{{val}}</mat-option>
+=======
+                        <mat-select formControlName="Remark">
+                            <mat-option *ngFor="let val of Remark" [value]="val">{{val}}</mat-option>
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
                         </mat-select>
                     </mat-form-field>
                 </div>
                 <div class="row">
                     <mat-form-field appearance="outline">
+<<<<<<< HEAD
                         <mat-label>MIS_REMARK</mat-label>
                         <mat-select formControlName="MIS_STATUS">
                             <mat-option *ngFor="let val of MIS_STATUS" [value]="val">{{val}}</mat-option>
@@ -87,11 +104,17 @@
                             (input)="onActionPointInput($event)"></textarea>
                         <mat-hint>Word count: {{ getWordCount(meetingForm.get('ActionPoint')?.value || '') }}/{{
                             maxWords }}</mat-hint>
+=======
+                        <mat-label>Actionable_Points</mat-label>
+                        <textarea matInput formControlName="ActionPoint" (input)="onActionPointInput($event)"></textarea>
+                        <mat-hint>Word count: {{ getWordCount(meetingForm.get('ActionPoint')?.value || '') }}/{{ maxWords }}</mat-hint>
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
                         <mat-error *ngIf="isWordLimitExceeded(meetingForm.get('ActionPoint')?.value || '')">
                             Word limit exceeded! Maximum allowed is {{ maxWords }} words.
                         </mat-error>
                     </mat-form-field>
                 </div>
+<<<<<<< HEAD
             </div>
 
             <div mat-dialog-actions class="action">
@@ -100,4 +123,13 @@
                 <button mat-raised-button color="primary" [disabled]=!meetingForm type="submit">Save</button>
             </div>
         </form>
+=======
+        <div mat-dialog-actions class="action">
+            <button mat-raised-button type="button" (click)="onCancel()">cancel</button>
+
+            <button mat-raised-button color="primary" [disabled]=!meetingForm type="submit">Save</button>
+        </div>
+        </form>
+        </div>
+>>>>>>> e632e89d2ec4c1d61e17a7fdf59b1897d1a5a8cf
     </mat-card>
