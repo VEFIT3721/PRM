@@ -64,11 +64,15 @@
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Remark</mat-label>
-            <input matInput disabled [value]="meetingDetails.Remark">
+            <input matInput disabled [value]="meetingDetails.User_Remark">
         </mat-form-field>
           <span *ngIf="userRole == 'CHECKER'"></span>
         </div>
         <div class="row">
+          <mat-form-field appearance="outline">
+            <mat-label>MIS_STATUS</mat-label>
+                <input matInput disabled [value]="meetingDetails.MIS_STATUS"/>
+            </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Final Remark</mat-label>
             <mat-select formControlName="finalRemark">
@@ -81,23 +85,27 @@
           <h3>Uploaded Files:</h3>
             <div *ngFor="let file of meetingFiles">
               <button mat-raised-button color="warn"  (click)="downloadFile(file.fileUrl, file.fileName)" class="button-content">
-                <mat-icon style="padding-bottom: 15px;">download</mat-icon>download
+                <mat-icon>download</mat-icon>download
               </button>
             </div>
 
         </div>
-        <div class="row">
-        <label for="fileUpload" mat-raised-button color="primary" style="padding-top: 22px;">
-          <mat-icon>cloud_upload</mat-icon>
-          Upload Document
-        </label>
-        <input type="file" id="fileUpload" (change)="onFileChange($event)" accept=".pdf,.pptx,.docx,.xlsx,.csv,.jpg,.png" hidden />
+        <div *ngIf="meetingDetails.User_Remark !== 'Resolved' && meetingDetails.User_Remark !== 'Rejected'">
+          <div class="row">
+            <label for="fileUpload" mat-raised-button color="primary" style="padding-top: 22px;">
+              <mat-icon>cloud_upload</mat-icon> Upload Document
+            </label>
+            <input
+              type="file"
+              id="fileUpload"
+              (change)="onFileChange($event)"
+              accept=".pdf,.pptx,.docx,.xlsx,.csv,.jpg,.png"
+              hidden
+            />
+          </div>
         </div>
-        <!-- View Button -->
-        <!-- <button *ngIf="uploadedFileUrl" mat-icon-button (click)="onViewFile(file.fileUrl)">
-          <mat-icon>visibility</mat-icon>
-        </button> -->
         <mat-progress-bar mode="determinate" *ngIf="isUploading" [value]="uploadProgress"></mat-progress-bar>
+
         </div>
         <mat-card-actions>
       <button mat-raised-button color="primary" type="submit" *ngIf="userRole === 'USER' || userRole === 'CHECKER' && meetingDetailsForm.valid">Save Changes</button>

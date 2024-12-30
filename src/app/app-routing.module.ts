@@ -8,21 +8,29 @@ import { AuthGuard } from './GUARDS/auth.guard';
 import { MeetingDetailsComponent } from './COMPONENT/meeting-details/meeting-details.component';
 import { ExportComponent } from './COMPONENT/export/export.component';
 import { DASHBOARDComponent } from './COMPONENT/dashboard/dashboard.component';
+import { MISUPDATEComponent } from './COMPONENT/misupdate/misupdate.component';
+import { ForgotComponent } from './COMPONENT/forgot/forgot.component';
+import { ResetPasswordComponent } from './COMPONENT/reset-password/reset-password.component';
+import { UsermasterComponent } from './COMPONENT/usermaster/usermaster.component';
 
 
 
 const routes: Routes = [{path:'register',component:UserRegistrationComponent},
   { path: 'login', component: LoginComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'forgot', component: ForgotComponent },
+      { path: 'reset-password', component: ResetPasswordComponent },
+   { path: '', redirectTo: '/login', pathMatch: 'full' },
   {
     path: '', component: HomeComponent,
     children: [
       {path:'meeting',component:MeetingComponent,canActivate:[AuthGuard],data: { roles: ['ADMIN','USER','CHECKER'] }},
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard], data: { roles: ['', 'ADMIN','USER','CHECKER'] } },
-  { path: 'edit', component: MeetingDetailsComponent, canActivate: [AuthGuard], data: { roles: ['USER','ADMIN','CHECKER'] } },
-  { path: 'export', component: ExportComponent,canActivateChild:[AuthGuard],data:{roles:['ADMIN','USER']}},
+  { path: 'update-meeting', component: MeetingDetailsComponent, canActivate: [AuthGuard], data: { roles: ['USER','ADMIN','CHECKER'] } },
+  { path: 'reports', component: ExportComponent,canActivateChild:[AuthGuard],data:{roles:['ADMIN','USER']}},
       { path: 'register', component: UserRegistrationComponent },
-      {path:'dashboard',component:DASHBOARDComponent}
+      {path:'dashboard',component:DASHBOARDComponent},
+      {path:'misupdate',component:MISUPDATEComponent},
+      {path:'user',component:UsermasterComponent,canActivate:[AuthGuard],data:{roles:['ADMIN','CHECKER']}}
     ]
     
 }

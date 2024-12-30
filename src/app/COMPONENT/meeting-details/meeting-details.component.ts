@@ -17,7 +17,8 @@ export interface MeetingDetails {
   ActionPoint: string;
   TargetDate: string;
   MisCordinator: string;
-  Remark: string;
+  User_Remark: string;
+  MIS_STATUS:string;
 }
 
 
@@ -41,6 +42,8 @@ export class MeetingDetailsComponent implements OnInit {
   ];
   uploadedFileUrl!: string;
   fileType!: string;
+  file!: string;
+  fileUrl!:string;
   downloadFileUrl!: string;
   meetingFiles: any[] = [];
   uploadProgress = 0; // Upload progress indicator
@@ -68,6 +71,7 @@ export class MeetingDetailsComponent implements OnInit {
       ActionPoint: [''], // Prepopulated, not editable
       TargetDate: [''], // Prepopulated, not editable
       MisCordinator: [''], // Prepopulated, not editable
+      MIS_STATUS:[''],
       finalRemark: ['', Validators.required],
 
     });
@@ -91,15 +95,38 @@ export class MeetingDetailsComponent implements OnInit {
             ActionPoint: response[7],
             TargetDate: response[8],
             MisCordinator: response[9],
-            Remark: response[10],
+            User_Remark: response[10],
+            MIS_STATUS:response[16]
             
           };
           this.meetingDetails = meetingDetails;
-          this.originalRemark = meetingDetails.Remark; // Store original remark
-          this.fetchMeetingFiles(this.meetingId);
+          this.originalRemark = meetingDetails.User_Remark; // Store original remark
+          //  this.fetchMeetingFiles(this.meetingId);
+          // Populate the form with the fetched data
+          //  this.fetchMeetingFiles(this.meetingId);
+          this.meetingDetailsForm.patchValue({
+            meetingId: meetingDetails.meetingId,
+            ConductedDate: meetingDetails.ConductedDate,
+            VerticalName: meetingDetails.VerticalName,
+            ConductedPerson: meetingDetails.ConductedPerson,
+            department: meetingDetails.department,
+            DeptHod: meetingDetails.DeptHod,
+            EmpCode: meetingDetails.EmpCode,
+            ActionPoint: meetingDetails.ActionPoint,
+            TargetDate: meetingDetails.TargetDate,
+            MisCordinator: meetingDetails.MisCordinator,
+            User_Remark: meetingDetails.User_Remark,
+            MIS_STATUS: meetingDetails.MIS_STATUS
+          });
+          if(meetingDetails.User_Remark === 'Resolved'){
+            //disable user remark field
+            this.meetingDetailsForm.get('finalRemark')?.disable();
+          }
+         
         } else {
           console.warn('No meeting details found for ID:', this.meetingId);
           // Handle case where no meeting is found (optional)
+          alert('No meeting details found for ID:')
         }
       }, (error) => {
         console.error('Error fetching meeting details:', error);
@@ -107,24 +134,41 @@ export class MeetingDetailsComponent implements OnInit {
       });
   }
  
-  fetchMeetingFiles(meetingId: string) {
-    this.meetingService.getMeetingFiles(meetingId)
-      .subscribe((files) => {
-        if (files && files.length > 0) {
-          this.meetingFiles = files.map(file => ({
-            ...file,
-            fileUrl: `data:${file.fileType};base64,${file.fileData}`
-          }));
-          console.log('Fetched Files:', this.meetingFiles); // Log to check fetched files
-        } else {
-          console.warn('No files found for this meeting ID:', meetingId);
-        }
-      }, (error) => {
-        console.error('Error fetching meeting files:', error);
-      });
-  }
-  
+// fetchMeetingFiles(meetingId: string) {
+//   this.meetingService.getMeetingFiles(meetingId).subscribe(
+//     (files) => {
+//       if (files && files.length > 0) {
+//         this.meetingFiles = files.map(file => {
+//           const baseUrl = 'https://vef.manappuram.com';  // Your backend base URL
+
+//           // Ensure fileUrl is correctly formed
+//           const fileUrl = file.fileUrl.startsWith('http') ? file.fileUrl : `${baseUrl}${file.fileUrl}`;
+//           console.log('Raw fileUrl:', file.fileUrl); // Log the raw URL from the API
+//           console.log('Formatted fileUrl:', fileUrl); // Log the final formatted URL
+//           return {
+//             ...file,
+//             fileUrl,  // Correctly formatted URL
+//             fileName: file.fileName,
+//             fileType: file.fileType
+//           };
+//         });
+//       } else {
+//         this.toastr.warning('No files found for this meeting ID.');
+//       }
+//     },
+//     (error) => {
+//       this.toastr.error(error.message); // Display the extracted error message
+//       console.error('Error fetching meeting files:', error);
+      
+//     }
+//   );
+// }
   onFileChange(event: any) {
+    if (this.meetingDetails?.User_Remark === 'Resolved' || this.meetingDetails?.User_Remark === 'Rejected') {
+      this.toastr.warning('Cannot upload files. Status is Resolved or Rejected.');
+      return;
+    }
+  
     const file = event.target.files[0];
     const allowedTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv', 'application/.jpg'];
     if (file) {
@@ -168,15 +212,24 @@ export class MeetingDetailsComponent implements OnInit {
 
 
   onViewFile(fileUrl: string) {
-    window.open(this.uploadedFileUrl, '_blank');
+    window.open(fileUrl, '_blank');
   }
 
+  // downloadFile(fileUrl: string, fileName: string) {
+  //   const link = document.createElement('a');
+  //   link.href = fileUrl;
+  //   link.download = fileName;
+  //   link.click();
+  // }
+  
   downloadFile(fileUrl: string, fileName: string) {
     const link = document.createElement('a');
     link.href = fileUrl;
     link.download = fileName;
     link.click();
-  }  
+  }
+  
+
   onSearchMeetingId() {
     if (this.meetingSearchForm.valid) {
       const meetingId = this.meetingSearchForm.get('meetingId')?.value;
@@ -188,6 +241,10 @@ export class MeetingDetailsComponent implements OnInit {
 
   // meeting-details.component.ts
   onSubmit() {
+    if (this.meetingDetails?.User_Remark === 'Resolved') {
+      this.toastr.warning('Cannot update remarks. Status is already Resolved.');
+      return;
+    }
     if (this.meetingDetailsForm.valid) {
       console.log('Form is valid');
       const originalRemark = this.originalRemark;

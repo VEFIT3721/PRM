@@ -63,9 +63,21 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline">
                         <mat-label>Status</mat-label>
-                        <mat-select formControlName="Remark">
-                            <mat-option *ngFor="let val of Remark" [value]="val">{{val}}</mat-option>
+                        <mat-select formControlName="User_Remark">
+                            <mat-option *ngFor="let val of User_Remark" [value]="val">{{val}}</mat-option>
                         </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field appearance="outline">
+                        <mat-label>MIS_REMARK</mat-label>
+                        <mat-select formControlName="MIS_STATUS">
+                            <mat-option *ngFor="let val of MIS_STATUS" [value]="val">{{val}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>MIS_EMAIL</mat-label>
+                        <input matInput formControlName="MIS_EMAIL">
                     </mat-form-field>
                 </div>
                 <div class="row">
@@ -80,7 +92,6 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-
             </div>
 
             <div mat-dialog-actions class="action">

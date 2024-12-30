@@ -1,17 +1,15 @@
 /* Style the mat-card */
 mat-card {
-    max-width: 800px;
-    /* adjust the width as needed */
-    width:100%;
+    max-width: 100%;
+    width: 100%;
     margin: 20px auto;
-    /* center the card */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Style the mat-card-header */
 mat-card-header {
     background: linear-gradient(90deg, #8cc751, #ADFF2F);
- justify-content: center;
+    justify-content: center;
     padding: 16px;
     border-bottom: 1px solid #ddd;
 }
@@ -20,118 +18,57 @@ mat-card-title {
     font-size: 18px;
     font-weight: bold;
     color: #333;
-   
 }
 
 /* Style the mat-card-content */
 mat-card-content {
     padding: 16px;
-    background:linear-gradient(90deg,
-        #f000,
-        #72706566)
-}
-
-/* Style the form */
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 16px;
-}
-
-mat-form-field {
-    width: 30%;
-    margin-bottom: 16px;
-}
-
-mat-label {
-    font-size: 14px;
-    color: #666;
-}
-
-input.mat-input-element {
-    padding: 8px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-button.mat-raised-button {
-    width: 100%;
-    margin-top: 16px;
-    background-color: #337ab7;
-    /* blue background */
-    color: #fff;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-button.mat-raised-button:hover {
-    background-color: #23527c;
-    /* darker blue on hover */
-}
-
-/* Style the mat-table */
-mat-table {
-    width: 100%;
-    margin-top: 16px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    overflow: auto;
-}
-
-mat-header-cell {
-    background-color: #f0f0f0;
-    /* light gray background */
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
-    font-weight: bold;
-}
-
-mat-cell {
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
-}
-
-/* Style the mat-spinner */
-mat-spinner {
-    margin: 20px auto;
-    font-size: 24px;
-    color: #3705eb;
-    /* blue color */
-}
-
-/* your-component.component.css */
-
-.custom-table {
-    border-collapse: collapse;
-    width: 100%;
-    border: 1px solid #ddd;
-    /* Border around the whole table */
-}
-
-.custom-header-cell {
-    background-color: #f5f5f5;
-    /* Light grey background for header */
-    color: #333;
-    /* Dark text color for header */
-    font-weight: bold;
-    /* Bold text for header */
-    border: 1px solid #ddd;
-    /* Light border around header cells */
+    background: linear-gradient(90deg, #f000, #72706566);
 }
 
 .mat-cell {
-    border: 1px solid #ddd;
-    /* Light border around table cells */
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-:host{
+/* Add a border to the entire table */
+mat-table {
+    width: 100%;
+    border: 1px solid #000000; /* Light gray border for the table */
+    border-radius: 4px; /* Optional: Rounded corners */
+    
+  }
+  
+  /* Header cell border */
+  mat-header-cell {
+    border: 1px solid #ddd; /* Border for header cells */
+    background-color: #f5f5f5; /* Light gray background */
+
+    padding: 10px;
+  }
+  
+  /* Body cell border */
+  mat-cell {
+    border: 1px solid #ddd; /* Border for body cells */
+    padding: 10px;
+  }
+  
+  /* Add border to the paginator if you want */
+  mat-paginator {
+    border-top: 1px solid #ddd; /* Border above the paginator */
+    padding: 10px;
+  }
+  
+  /* Optional: Add hover effect for rows */
+  mat-row:hover {
+    background-color: #f9f9f9; /* Light hover effect */
+  }
+  
+
+/* Background for the host element */
+:host {
     display: block;
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    
 }

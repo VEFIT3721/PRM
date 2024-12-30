@@ -13,7 +13,8 @@ interface MeetingRresult{
   VerticalName: String;
   MisCordinator: String;
   DeptHod: String;
-  EMAIL_ID:String
+  EMAIL_ID:String;
+  MIS_EMAIL:String;
 }
 
 @Component({
@@ -22,11 +23,17 @@ interface MeetingRresult{
   styleUrl: './meeting.component.css'
 })
 export class MeetingComponent {
-  Remark: string[] = [
+  User_Remark: string[] = [
     'in-progress',
     'Resolved',
     'Rejected'
   ]
+
+  MIS_STATUS: String[] = [
+    'in-progress',
+    'Resolved',
+    'Rejected'
+  ];
 
   formSubmitted: any;
   selectedFiles!: FileList;
@@ -52,7 +59,9 @@ export class MeetingComponent {
       'ActionPoint': ['', Validators.required],
       'TargetDate': ['', Validators.required],
       'MisCordinator': ['', Validators.required],
-      'Remark': ['', Validators.required],
+      'User_Remark': ['', Validators.required],
+      'MIS_STATUS': ['', Validators.required],
+      'MIS_EMAIL':['',Validators.required],
     });
     this.meetingSearchForm = this._fb.group({
       meetingId: ['', Validators.required]
@@ -157,7 +166,7 @@ export class MeetingComponent {
     try {
       const response = await this.meeting.getEmployeeDetails(employeeCode).toPromise();
       const employeeData = response; 
-      this.meetingForm.patchValue({ DeptHod: employeeData[0], department:employeeData[1], VerticalName:employeeData[2],MisCordinator:employeeData[3],ConductedPerson:employeeData[4],EMAIL_ID:employeeData[5] });
+      this.meetingForm.patchValue({ DeptHod: employeeData[0], department:employeeData[1], VerticalName:employeeData[2],MisCordinator:employeeData[3],ConductedPerson:employeeData[4],EMAIL_ID:employeeData[5],MIS_EMAIL:employeeData[6] });
     } catch (error) {
       console.error('Error fetching employee details:', error);
       // Handle error (e.g., display error message to user)

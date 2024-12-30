@@ -1,41 +1,57 @@
+
 <mat-card>
     <mat-card-header>
         <mat-card-title>Search Pending ATR Details</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
-            <mat-form-field appearance="outline">
-                <mat-label>Department or Employee Code</mat-label>
-                <input matInput formControlName="searchTerm" placeholder="Enter department or employee code">
-            </mat-form-field>
-            <button mat-raised-button color="primary" type="submit">Search</button>
-        </form>
-
-        <mat-table *ngIf="atrDetails.length > 0" [dataSource]="atrDetails">
-            <!-- Define columns here -->
-            <ng-container matColumnDef="Empcode">
-                <mat-header-cell *matHeaderCellDef> Emp_Code </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.Empcode}} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="DELAY_DAYS">
-                <mat-header-cell *matHeaderCellDef> Delay Days </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{ element.DELAY_DAYS }} </mat-cell>
-            </ng-container>
-
-
-            <ng-container matColumnDef="verticalName">
-                <mat-header-cell *matHeaderCellDef> Vertical Name </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.verticalName}} </mat-cell>
-            </ng-container>
-
-
-            <!-- Add more columns as needed -->
-
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </mat-table>
-
-        <mat-spinner *ngIf="loading"></mat-spinner>
+        <div class="main-body">
+            <mat-form-field>
+                <mat-label>Filter</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+              </mat-form-field>
+              
+              <div class="table-container">
+                <table mat-table [dataSource]="atrDetails" matSort>
+              
+                  <!-- ID Column -->
+                  <ng-container matColumnDef="USER_NAME">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> USER_NAME </th>
+                    <td mat-cell *matCellDef="let row"> {{row.USER_NAME}} </td>
+                  </ng-container>
+               
+                  <!-- Progress Column -->
+                  <ng-container matColumnDef="DEPARTMENT">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> DEPARTMENT</th>
+                    <td mat-cell *matCellDef="let row"> {{row.DEPARTMENT}} </td>
+                  </ng-container>
+              
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="Inprogress">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Inprogress</th>
+                    <td mat-cell *matCellDef="let row"> {{row.Inprogress}} </td>
+                  </ng-container>
+              
+                  <!-- Fruit Column -->
+                  <ng-container matColumnDef="TOTAL_DELAYS">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>TOTAL_DELAYS</th>
+                    <td mat-cell *matCellDef="let row"> {{row.TOTAL_DELAYS}} </td>
+                  </ng-container>
+                  <!--  -->
+                  <ng-container matColumnDef="DELAY_DAYS">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>DELAY_DAYS </th>
+                    <td mat-cell *matCellDef="let row"  [ngStyle]="{'color': row.DELAY_DAYS > 10 ? 'red' : 'black'}"> {{row.DELAY_DAYS}} </td>
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              
+                  <!-- Row shown when there is no matching data. -->
+                  <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                  </tr>
+                </table>
+              
+                <mat-paginator  [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator> 
+            </div>
+        </div>
     </mat-card-content>
 </mat-card>

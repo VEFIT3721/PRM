@@ -35,6 +35,10 @@ import { MeetingDetailsComponent } from './COMPONENT/meeting-details/meeting-det
 import { ExportComponent } from './COMPONENT/export/export.component';
 import { DatePipe } from '@angular/common';
 import { DASHBOARDComponent } from './COMPONENT/dashboard/dashboard.component';
+import { MISUPDATEComponent } from './COMPONENT/misupdate/misupdate.component';
+import { ForgotComponent } from './COMPONENT/forgot/forgot.component';
+import { ResetPasswordComponent } from './COMPONENT/reset-password/reset-password.component';
+import { UsermasterComponent } from './COMPONENT/usermaster/usermaster.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +50,11 @@ import { DASHBOARDComponent } from './COMPONENT/dashboard/dashboard.component';
     HasRoleDirective,
     MeetingDetailsComponent,
     ExportComponent,
-    DASHBOARDComponent
+    DASHBOARDComponent,
+    MISUPDATEComponent,
+    ForgotComponent,
+    ResetPasswordComponent,
+    UsermasterComponent
   ],
   imports: [
     BrowserModule,

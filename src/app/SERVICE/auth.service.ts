@@ -88,9 +88,9 @@ export class AuthService {
   }
 
   private handleError(error: HttpErrorResponse) {
-    console.error(
-      `Backend returned code ${error.status}, body was: ${error.error}`);
-    return throwError('Something bad happened; please try again later.');
+    console.error
+      ('Error:', error);
+      return throwError(error);
   }
 
   // Helper function to decode the JWT token
@@ -124,4 +124,16 @@ export class AuthService {
     console.log('Retrieved token from local storage:', localStorage.getItem('authToken'));
     return localStorage.getItem('authToken');
   }
+
+  requestPasswordReset(email: string): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/forgot-password`, { email });
+  }
+
+  resetPassword(token: string, newPassword: string,Changed_By:string ): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/reset-password`, { token, newPassword, Changed_By })
+    .pipe(
+      catchError(this.handleError)
+    );
 }
+  }
+

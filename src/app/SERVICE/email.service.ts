@@ -13,9 +13,9 @@ export class EmailService {
 
   constructor(private http: HttpClient) { }
 
-  getEmail(meetingId: string, recipientEmail: string, DEPTHOD: string): Observable<any> {
+  getEmail(meetingId: string, recipientEmail: string, DeptHod: string): Observable<any> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    const jsonData = JSON.stringify({ meetingId, recipientEmail, DEPTHOD });
+    const jsonData = JSON.stringify({ meetingId, recipientEmail, DeptHod });
 
     return this.http.post<any>(this.apiUrl, jsonData, { headers })
       .pipe(

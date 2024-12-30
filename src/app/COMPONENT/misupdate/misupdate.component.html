@@ -1,0 +1,104 @@
+<div class="card-container"></div>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                <h2>Meeting Details</h2>
+            </mat-card-title>
+        </mat-card-header>
+        <form [formGroup]="meetingSearchForm" (ngSubmit)="onSearchMeetingId()">
+            <div mat-card-content>
+                <mat-form-field appearance="outline">
+                    <mat-label>MeetingId:</mat-label>
+                    <input matInput="text" id="meetingId" formControlName="meetingId" required>
+                </mat-form-field>
+            </div>
+            <button mat-raised-button color="warn" type="submit">Search</button>
+        </form>
+        <div *ngIf="meetingDetails">
+            <form [formGroup]="meetingDetailsForm" (ngSubmit)="onSubmit()">
+                <div mat-dialog-content>
+                    <div class="row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Conducted Date:</mat-label>
+                            <input matInput disabled [value]="meetingDetails.ConductedDate |date:'dd/MM/yyyy'">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Vertical Name:</mat-label>
+                            <input matInput disabled [value]="meetingDetails.VerticalName">
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Conducted Person:</mat-label>
+                            <input matInput disabled [value]="meetingDetails.ConductedPerson">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Department:</mat-label>
+                            <input matInput disabled [value]="meetingDetails.department">
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Department Hod:</mat-label>
+                            <input matInput disabled [value]="meetingDetails.DeptHod">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>HOD Employee Code:</mat-label>
+                            <input matInput disabled [value]="meetingDetails.EmpCode">
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Actionable_Points:</mat-label>
+                            <input matInput disabled [value]="meetingDetails.ActionPoint">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Target_Date:</mat-label>
+                            <input matInput disabled [value]="meetingDetails.TargetDate|date:'dd/MM/yyyy'">
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>MIS_CORDINATOR:</mat-label>
+                            <input matInput disabled [value]="meetingDetails.MisCordinator">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>User_Remark</mat-label>
+                            <input matInput disabled [value]="meetingDetails.User_Remark">
+                        </mat-form-field>
+                        <span *ngIf="userRole == 'maker'"></span>
+                    </div>
+                    <div class="row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Mis_Remark</mat-label>
+                            <input matInput disabled [value]="meetingDetails.MIS_STATUS">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>MIS Final Remark</mat-label>
+                            <mat-select formControlName="MIS_STATUS">
+                                <mat-option *ngFor="let val of MIS_STATUS" [value]="val">{{val}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <!-- <span *ngIf="userRole == 'maker'"></span> -->
+                    </div>
+                    <div *ngIf="meetingFiles && meetingFiles.length > 0">
+                        <div *ngFor="let file of meetingFiles">
+                          <!-- View Button to preview the uploaded file with Eye Icon -->
+                          <button mat-raised-button color="accent" (click)="onViewFile(file.fileUrl, file.fileType)" class="button-gap">
+                            <mat-icon>visibility</mat-icon> <!-- Eye Icon -->
+                            View {{ file.fileName }}
+                          </button>
+                      
+                          <!-- Download Button with Down Arrow Icon -->
+                          <button mat-raised-button color="primary" (click)="downloadFile(file.fileUrl, file.fileName)">
+                            <mat-icon>download</mat-icon> <!-- Down Arrow Icon -->
+                            Download
+                          </button>
+                        </div>
+                      </div>
+                    <button mat-raised-button color="primary" type="submit"
+                        *ngIf="meetingDetailsForm.valid">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </mat-card>
